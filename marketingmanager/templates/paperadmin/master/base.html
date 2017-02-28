@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "paperadmin/master/head.html" %}
+    {% block customstyle %}{% endblock %}
+    {% block extrahead %}{% endblock %}
+    {% block extrastyle %}{% endblock %}
+    <style type="text/css">
+        .pointer {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="animated-content infobar-overlay">
+
+{% include "paperadmin/master/topnav.html" %}
+
+<div id="wrapper">
+    <div id="layout-static">
+        {% block sidebar %}
+            {% include "paperadmin/master/menu.html" %}
+        {% endblock %}
+
+        <div class="static-content-wrapper">
+
+            <!-- MAIN CONTENT START-->
+            <div class="static-content">
+                <div class="page-content">
+                    <ol class="breadcrumb">
+                        {% block breadcrumb %}{% endblock %}
+                    </ol>
+                    <div class="page-heading">
+                        <!-- <h1>Dashboard<small>Project Statistics</small></h1>
+                        <div class="options">
+                             <div class="btn-toolbar">
+                                 <form action="" class="form-horizontal row-border" style="display: inline-block;">
+                                     <div class="form-group hidden-xs">
+                                         <div class="col-sm-8">
+                                             <button class="btn btn-default" id="daterangepicker-d">
+                                                 <i class="fa fa-calendar"></i>
+                                                 <span><?php echo date("F j, Y", strtotime('-30 day')); ?> - <?php echo date("F j, Y"); ?></span> <b class="caret"></b>
+                                             </button>
+                                         </div>
+                                     </div>
+                                 </form>
+                                 <a href="#" class="btn btn-default" style="vertical-align: top;">Settings</a>
+                             </div>
+                         </div> -->
+                        {% block heading %}{% endblock %}
+                    </div>
+                    <div class="container-fluid">
+                        {% block alert %}
+                            {% include "paperadmin/master/notification.html" %}
+                        {% endblock %}
+                        {% block content %}{% endblock %}
+                    </div>
+                    <!-- .container-fluid -->
+                </div>
+                <!-- #page-content -->
+            </div>
+            <!-- MAIN CONTENT END-->
+
+            <footer role="contentinfo">
+                <div class="clearfix">
+                    <ul class="list-unstyled list-inline pull-left">
+                        <li><h6 style="margin: 0;">&copy; {% now "Y" %} Exit10 Pvt. Ltd.</h6></li>
+                    </ul>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+</div>
+
+{# include "paperadmin/master/scrollmenu.html" #}
+{# include "paperadmin/master/switcher.html" #}
+
+{% include "paperadmin/master/scripts.html" %}
+{% block extrascript %}{% endblock %}
+
+</body>
+</html>

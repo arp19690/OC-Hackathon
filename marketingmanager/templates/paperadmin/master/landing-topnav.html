@@ -1,0 +1,44 @@
+{% load static %}
+<header id="topnav" class="navbar navbar-default navbar-fixed-top" role="banner">
+    <!-- <div id="page-progress-loader" class="show"></div> -->
+
+    <div class="logo-area">
+        <a class="navbar-brand navbar-brand-default" href="/">
+            <img class="show-on-collapse img-logo-white" alt="Paper"
+                 src="https://s3-ap-southeast-1.amazonaws.com/overcart.media/favicon46x46.png">
+            <img class="show-on-collapse img-logo-dark" alt="Paper"
+                 src="https://s3-ap-southeast-1.amazonaws.com/overcart.media/favicon46x46.png">
+            <img class="img-white" alt="Paper"
+                 src="https://s3-ap-southeast-1.amazonaws.com/overcart.media/logo_177x23.png">
+            <img class="img-dark" alt="Paper"
+                 src="https://s3-ap-southeast-1.amazonaws.com/overcart.media/logo_177x23.png">
+        </a>
+
+        <div id="search-box">
+            <input class="form-control" type="text" placeholder="Search..." id="search-input"></input>
+        </div>
+    </div>
+    <!-- logo-area -->
+
+    <ul class="nav navbar-nav toolbar pull-right">
+        {% if request.user.is_authenticated %}
+            <li class="toolbar-icon-bg hidden-xs" style="width: 100px;">
+                <a href="#" class="toggle-fullscreen"><span class="icon-bg">
+	        	<span><i class="fa fa-sign-in" style="display: inline"></i>&nbsp;Logout</span>
+	        </span></a>
+            </li>
+        {% else %}
+            <li class="toolbar-icon-bg hidden-xs" style="width: 100px;">
+                <a href="#" class="toggle-fullscreen"><span class="icon-bg">
+	        	<span><i class="fa fa-user" style="display: inline"></i>&nbsp;Register</span>
+	        </span></a>
+            </li>
+            <li class="toolbar-icon-bg hidden-xs" style="width: 100px;">
+                <a href="#" class="toggle-fullscreen"><span class="icon-bg">
+	        	<span><i class="fa fa-sign-in" style="display: inline"></i>&nbsp;Login</span>
+	        </span></a>
+            </li>
+        {% endif %}
+    </ul>
+
+</header>

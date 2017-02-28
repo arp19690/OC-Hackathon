@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "paperadmin/master/head.html" %}
+
+    {% block customstyle %}{% endblock %}
+
+    {% block extrahead %}{% endblock %}
+    <style type="text/css">
+        .signup {
+            line-height: 50px;
+            padding: 0 50px;
+            color: #fff;
+            background-color: rgba(23, 196, 187, 1);
+            height: 50px;
+            display: inline-block;
+            border-radius: 10px;
+            margin: 0 50px 0 0;
+        }
+
+        .signup-alt {
+            line-height: 46px;
+            padding: 0 50px;
+            color: #fff;
+            height: 50px;
+            display: inline-block;
+            border-radius: 10px;
+            margin: 0 50px 0 0;
+            border: 2px solid #fff;
+        }
+    </style>
+</head>
+
+<body class="animated-content infobar-overlay">
+{% include "paperadmin/master/landing-topnav.html" %}
+<div id="wrapper">
+    {% include "paperadmin/master/notification.html" %}
+    {% block content %}{% endblock %}
+</div>
+
+{% include "paperadmin/master/scripts.html" %}
+{% block extrascript %}
+    <script>
+        setTimeout(function () {
+            $('body').removeClass('sidebar-collapsed');
+        }, 400);
+        setTimeout(function () {
+            $('.alert-dismissable').slideUp('slow');
+        }, 5000);
+    </script>
+{% endblock %}
+
+</body>
+</html>

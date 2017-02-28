@@ -1,26 +1,11 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>
-<html class="ie lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>
-<html class="ie lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>
-<html class="ie lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>
-<html> <![endif]-->
-<!--[if !IE]><!-->
-<html><!-- <![endif]-->
-{% load static %}
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "paperadmin/master/base.html" %}
+
 <h1>For website</h1>
 
-<p><strong>Total Users:- </strong>{{website.total_users}}</p>
+<p><strong>Total Users:- </strong>{{ website.total_users }}</p>
 
-<p><strong>All Sources:- </strong>{{website.all_sources}}</p>
+<p><strong>All Sources:- </strong>{{ website.all_sources }}</p>
 
-<p><strong>Order Sold Per Minute:- </strong>{{orders_sold_per_minute}}</p>
+<p><strong>Order Sold Per Minute:- </strong>{{ orders_sold_per_minute }}</p>
 </body>
 </html>

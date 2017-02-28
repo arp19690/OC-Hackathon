@@ -1,0 +1,11 @@
+<div class="sticky">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}danger{% else %}warning{% endif %}">
+                <i class="fa fa-{% if message.tags == 'success' %}check{% elif message.tags == 'error' %}warning{% else %}warning{% endif %}"></i> 
+                <span>{{ message }}</span>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
