@@ -16,8 +16,8 @@ argparser = argparse.ArgumentParser(add_help=False)
 def main(argv):
     argparser.add_argument('table_id', type=str,
                            help=(
-                           'The table ID of the profile you wish to access. '
-                           'Format is ga:xxx where xxx is your profile ID.'))
+                               'The table ID of the profile you wish to access. '
+                               'Format is ga:xxx where xxx is your profile ID.'))
     # Authenticate and construct service.
     service, flags = sample_tools.init(
         argv, 'analytics', 'v3', __doc__, __file__, parents=[argparser],
@@ -60,6 +60,22 @@ def get_realtime_active_users(view_id):
         ids=view_id,
         metrics='rt:activeUsers',
         dimensions='rt:medium,rt:deviceCategory').execute()
+    return results
+
+
+def get_pageviews(view_id, start_date, end_date):
+    # Authenticate and construct service.
+    service, flags = sample_tools.init(
+        [view_id], 'analytics', 'v3', __doc__, __file__, parents=[argparser],
+        scope='https://www.googleapis.com/auth/analytics.readonly,https://www.googleapis.com/auth/analytics')
+    results = service.data().ga().get(
+        ids=view_id,
+        dimensions='ga:pageTitle,ga:pagePath',
+        metrics='ga:pageviews,ga:uniquePageviews',
+        start_date=start_date,
+        end_date=end_date,
+        sort='-ga:pageviews',
+    ).execute()
     return results
 
 

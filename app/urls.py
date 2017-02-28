@@ -1,6 +1,8 @@
-from django.conf.urls import url,include
+from django.conf.urls import url
+
 from . import views
 
 urlpatterns = [
-    url(r'^test/', views.get_ga_real_time_data,name="test"),
+    url(r'^real-time/', views.get_ga_real_time_data, name="real-time"),
+    url(r'^data-info/', views.get_ga_time_based_data, name="data-info"),
 ]
