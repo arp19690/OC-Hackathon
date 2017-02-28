@@ -1,26 +1,45 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>
-<html class="ie lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>
-<html class="ie lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>
-<html class="ie lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>
-<html> <![endif]-->
-<!--[if !IE]><!-->
-<html><!-- <![endif]-->
+{% extends "paperadmin/master/base.html" %}
 {% load static %}
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-<h1>For website</h1>
 
-<p><strong>Total Users:- </strong>{{website.total_users}}</p>
+{% block breadcrumb %}
+    <li class=""><a href="/">Home</a></li>
+    <li class="active">Dashboard</li>
+{% endblock %}
 
-<p><strong>All Sources:- </strong>{{website.all_sources}}</p>
+{% block heading %}
+    <h1>Dashboard
+        <small>Project Statistics</small>
+    </h1>
+{% endblock %}
+{% block extrastyle %}{% endblock %}
 
-<p><strong>Order Sold Per Minute:- </strong>{{orders_sold_per_minute}}</p>
-</body>
-</html>
+{% block content %}
+    <div data-widget-group="group1">
+        <div class="row upper-analytics">
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="info-tile info-tile-alt">
+                    <div class="info green-1">
+                        <div class="tile-heading"><span>Website Visitors</span></div>
+                        <div class="tile-body">{{ website.total_users }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="info-tile info-tile-alt">
+                    <div class="info green-2">
+                        <div class="tile-heading"><span>App Visitors</span></div>
+                        <div class="tile-body">{{ app.total_users }}</div>
+                    </div>
+                    <div class="stats hide">
+                        <div class="tile-content">
+                            <div id="dashboard-sparkline-gray"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrascript %}{% endblock %}

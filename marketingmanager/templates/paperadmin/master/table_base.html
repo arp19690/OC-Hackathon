@@ -1,0 +1,63 @@
+{% extends "paperadmin/master/base.html" %}
+
+{% load static %}
+
+{% block extrastyle %}
+    <link href="{% static "assets/css/admin/module.admin.page.tables.min.css" %}" rel="stylesheet"/>
+    <link href="{% static "assets/css/custom/custom.css" %}" rel="stylesheet"/>
+    <link href="{% static "assets/css/helpers/modal.css" %}" rel="stylesheet"/>
+    <style type="text/css">
+        body {
+            padding-top: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div id="loading" style="display: none;">
+        <div class="svg-icon-loader">
+            <img src="{% static "/assets/components/helpers/loaders/hourglass.svg" %}" width="60" alt="">
+        </div>
+    </div>
+
+    <div class="widget widget-inverse">
+        <div class="widget-head">
+            {% block tablehead %}{% endblock %}
+        </div>
+
+        <div class="widget-body padding-bottom-none">
+            <div class="row" style="padding:0 0 10px">
+                {% block alerts %}{% endblock %}
+            </div>
+            {% if datas %}
+                <table class="dynamicTable tableTools table table-striped">
+                    {% block tablebody %}{% endblock %}
+                </table>
+            {% else %}
+                {% block emptytable %}{% endblock %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="actions row">
+        {% block actions %}{% endblock %}
+    </div>
+
+    {% block modal %}{% endblock %}
+
+{% endblock %}
+
+
+{% block extrascript %}
+
+    <script src="{% static "assets/components/modules/admin/tables/datatables/assets/lib/js/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "assets/components/modules/admin/tables/datatables/assets/lib/extras/TableTools/media/js/TableTools.min.js" %}"></script>
+    <script src="{% static "assets/components/modules/admin/tables/datatables/assets/lib/extras/ColVis/media/js/ColVis.min.js" %}"></script>
+    <script src="{% static "assets/components/modules/admin/tables/datatables/assets/custom/js/DT_bootstrap.js" %}"></script>
+    <script src="{% static "assets/components/modules/admin/tables/datatables/assets/custom/js/datatables.init.js" %}"></script>
+    <script src="{% static "assets/components/modules/admin/forms/elements/bootstrap-select/assets/lib/js/bootstrap-select.js" %}"></script>
+    <script src="{% static "assets/components/modules/admin/forms/elements/bootstrap-select/assets/custom/js/bootstrap-select.init.js" %}"></script>
+    <script src="{% static "assets/components/modules/admin/tables/classic/assets/js/tables-classic.init.js" %}"></script>
+{% endblock %}
+

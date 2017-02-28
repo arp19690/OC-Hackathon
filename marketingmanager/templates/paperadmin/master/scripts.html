@@ -1,0 +1,99 @@
+{% load static %}
+<!-- Load site level scripts -->
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" %}"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" %}"></script> -->
+<script src="{% static "paperadmin/assets/js/jqueryui-1.10.3.min.js" %}"></script>                            <!-- Load jQueryUI -->
+<script src="{% static "paperadmin/assets/js/bootstrap.min.js" %}"></script>                                <!-- Load Bootstrap -->
+<script src="{% static "paperadmin/assets/js/enquire.min.js" %}"></script>                                    <!-- Load Enquire -->
+<script src="{% static "paperadmin/assets/plugins/velocityjs/velocity.min.js" %}"></script>                    <!-- Load Velocity for Animated Content -->
+<script src="{% static "paperadmin/assets/plugins/velocityjs/velocity.ui.min.js" %}"></script>
+<script src="{% static "paperadmin/assets/plugins/progress-skylo/skylo.js" %}"></script>        <!-- Skylo -->
+<script src="{% static "paperadmin/assets/plugins/wijets/wijets.js" %}"></script>                            <!-- Wijet -->
+<script src="{% static "paperadmin/assets/plugins/sparklines/jquery.sparklines.min.js" %}"></script>             <!-- Sparkline -->
+<script src="{% static "paperadmin/assets/plugins/codeprettifier/prettify.js" %}"></script>                <!-- Code Prettifier  -->
+<script src="{% static "paperadmin/assets/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js" %}"></script>  <!-- Bootstrap Tabdrop -->
+<script src="{% static "paperadmin/assets/plugins/nanoScroller/js/jquery.nanoscroller.min.js" %}"></script> <!-- nano scroller -->
+<script src="{% static "paperadmin/assets/plugins/dropdown.js/jquery.dropdown.js" %}"></script> <!-- Fancy Dropdowns -->
+<script src="{% static "paperadmin/assets/plugins/bootstrap-material-design/js/material.min.js" %}"></script> <!-- Bootstrap Material -->
+<script src="{% static "paperadmin/assets/plugins/bootstrap-material-design/js/ripples.min.js" %}"></script> <!-- Bootstrap Material -->
+<script src="{% static "paperadmin/assets/demo/demo.js" %}"></script>
+<script src="{% static "paperadmin/assets/demo/demo-switcher.js" %}"></script>
+<!-- End loading site level scripts -->
+<!-- Charts -->
+<script src="{% static "paperadmin/assets/plugins/charts-flot/jquery.flot.min.js" %}"></script>                 <!-- Flot Main File -->
+<script src="{% static "paperadmin/assets/plugins/charts-flot/jquery.flot.pie.min.js" %}"></script>             <!-- Flot Pie Chart Plugin -->
+<script src="{% static "paperadmin/assets/plugins/charts-flot/jquery.flot.stack.min.js" %}"></script>           <!-- Flot Stacked Charts Plugin -->
+<script src="{% static "paperadmin/assets/plugins/charts-flot/jquery.flot.resize.min.js" %}"></script>          <!-- Flot Responsive -->
+<script src="{% static "paperadmin/assets/plugins/charts-flot/jquery.flot.tooltip.min.js" %}"></script>         <!-- Flot Tooltips -->
+<script src="{% static "paperadmin/assets/plugins/charts-flot/jquery.flot.spline.js" %}"></script>              <!-- Flot Curved Lines -->
+<script src="{% static "paperadmin/assets/plugins/easypiechart/jquery.easypiechart.min.js" %}"></script>        <!-- EasyPieChart-->
+<script src="{% static "paperadmin/assets/plugins/curvedLines-master/curvedLines.js" %}"></script>              <!-- marvinsplines -->
+<script src="{% static "paperadmin/assets/plugins/form-daterangepicker/moment.min.js" %}"></script>             <!-- Moment.js for Date Range Picker -->
+<!-- Date Range Picker -->
+<script src="{% static "paperadmin/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js" %}"></script>               <!-- Datepicker -->
+<!-- <script src="{% static "paperadmin/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" %}"></script> --> <!-- DateTime Picker -->
+
+<!-- <script src="{% static "paperadmin/assets/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js" %}"></script>   -->    <!-- jVectorMap -->
+<!-- <script src="{% static "paperadmin/assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" %}"></script>  --> <!--World Map-->
+<script src="{% static "paperadmin/assets/plugins/chartist/dist/chartist.min.js" %}"></script> <!-- chartist -->
+<script src="{% static "paperadmin/assets/plugins/form-jasnyupload/fileinput.min.js" %}"></script> <!-- chartist -->
+<!-- <script src="{% static "paperadmin/assets/demo/demo-index.js" %}"></script>                                      --><!-- Initialize scripts for this page-->
+
+<!-- End loading page level scripts-->
+<script src="{% static "paperadmin/assets/js/application.js" %}"></script>
+
+<script src="{% static "assets/js/helpers/jquery.cookie.js" %}"></script>
+
+
+<!-- Datatables -->
+<script src="{% static "paperadmin/assets/plugins/datatables/jquery.dataTables.js" %}"></script>
+<script src="{% static "paperadmin/assets/plugins/datatables/dataTables.bootstrap.js" %}"></script>
+<script src="{% static "paperadmin/assets/demo/demo-datatables.js" %}"></script>
+<script src="{% static "paperadmin/assets/plugins/tables-fixedheader/js/dataTables.fixedHeader.js" %}"></script>        <!-- Fixed Header -->
+<script src="{% static "paperadmin/assets/demo/demo-fixedheadertables.js" %}"></script>
+
+<script src="{% static "assets/js/custom/validation.js" %}"></script>
+
+<!-- Highchart Scripts -->
+<script src="{% static "assets/js/helpers/highcharts.js" %}"></script><!-- highCharts: stacked graph -->
+
+
+<script src="{% static "paperadmin/assets/plugins/form-daterangepicker/moment.min.js" %}"></script>
+
+<script src="{% static "paperadmin/assets/plugins/form-daterangepicker/daterangepicker.js" %}"></script>                    <!-- Date Range Picker -->
+<script src="{% static "paperadmin/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js" %}"></script>                <!-- Datepicker -->
+<script src="{% static "paperadmin/assets/plugins/bootstrap-timepicker/bootstrap-timepicker.js" %}"></script>                <!-- Timepicker -->
+<script src="{% static "paperadmin/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" %}"></script> <!-- DateTime Picker -->
+
+<script src="{% static "paperadmin/assets/demo/demo-pickers.js" %}"></script>
+<script src="{% static "assets/js/custom/selectize.js" %}"></script>
+<script>
+    $('select').not($('.no-selectize')).selectize({
+        sortField: 'text'
+    });
+
+    function add_custom_datatables(table_class, sortby_index, sort_type) {
+        if (!sort_type) {
+            sort_type = 'desc'
+        }
+
+        $('.' + table_class).DataTable({
+            "order": [[sortby_index, sort_type]],
+            {#            "iDisplayLength": display_length,#}
+            "iDisplayLength": 25,
+{#            dom: 'Bfrtip',#}
+{#            "select": true,#}
+            {#            "buttons": [#}
+            {#                {#}
+            {#                    extend: 'csv',#}
+            {#                    exportOptions: {#}
+            {#                        columns: indices#}
+            {#                    }#}
+            {#                }#}
+            {#            ]#}
+        });
+    }
+</script>
+
+
+
