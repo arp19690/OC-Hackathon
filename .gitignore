@@ -4,3 +4,5 @@ venv
 .env
 
 helpers/client_secrets.json
+
+analytics.dat
