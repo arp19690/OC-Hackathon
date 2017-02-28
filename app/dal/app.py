@@ -1,4 +1,5 @@
 from django.db import connection
+from datetime import datetime
 
 
 def dictfetchall(cursor):
@@ -63,3 +64,34 @@ def get_top_customers_by_city(from_datetime, end_datetime, cities_str=None,
     results = dictfetchall(cursor)
     cursor.close()
     return results
+
+
+def get_top_sellers(from_datetime, end_datetime, limit=10):
+    sql = """select asm.`entity_id`, asm.seller_id, asm.seller_name, sum(sfo.grand_total) as total_amount
+            from overcart.`sales_flat_order` as sfo
+            left join overcart.`awa_serialcode_mysavedorder` as asm on asm.`orderid` = sfo.`entity_id`
+            where sfo.created_at between '""" + str(
+        from_datetime) + """' and '""" + str(end_datetime) + """'
+            and sfo.status = 'delivered'
+            group by asm.`seller_id`
+            order by total_amount desc
+            limit """ + str(limit) + """;"""
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    results = dictfetchall(cursor)
+    cursor.close()
+    return results
+
+
+def get_orders_per_minutes(from_datetime, end_datetime, current_minute_of_day):
+    sql = """select count(entity_id) as total_orders from overcart.`sales_flat_order` as sfo
+          where sfo.`created_at` between '""" + str(
+        from_datetime) + """' and '""" + str(end_datetime) + """';"""
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    results = dictfetchall(cursor)
+    cursor.close()
+    total_orders = results[0]["total_orders"]
+    orders_per_minute = float(total_orders / current_minute_of_day)
+
+    return orders_per_minute
