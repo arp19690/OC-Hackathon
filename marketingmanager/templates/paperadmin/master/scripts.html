@@ -68,9 +68,9 @@
 <script src="{% static "paperadmin/assets/demo/demo-pickers.js" %}"></script>
 <script src="{% static "assets/js/custom/selectize.js" %}"></script>
 <script>
-    $('select').not($('.no-selectize')).selectize({
-        sortField: 'text'
-    });
+{#    $('select').not($('.no-selectize')).selectize({#}
+{#        sortField: 'text'#}
+{#    });#}
 
     function add_custom_datatables(table_class, sortby_index, sort_type) {
         if (!sort_type) {

@@ -1,0 +1,8 @@
+.card {
+    top: 127px;
+}
+
+.card .card-body {
+    padding: 14px;
+    text-align: center;
+}

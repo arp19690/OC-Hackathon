@@ -1,0 +1,29 @@
+/*.info-tile .tile-body{
+	text-align: left;
+	font-size: 18px;
+}*/
+
+.info-tile .tile-heading {
+    min-height: 35px;
+}
+
+.info .tile-body .sale {
+    text-align: center;
+    color: #e8eaf6;
+    height: 16px;
+    line-height: 16px;
+    font-weight: 400;
+    opacity: 0.7;
+    font-size: 11px;
+    text-transform: uppercase;
+    display: block;
+}
+
+.upper-analytics .fa-inr{
+    font-size:16px;
+}
+@media (min-width : 1200px) {
+    .col-sc-5 {
+        width: 20%;
+    }
+}
