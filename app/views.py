@@ -19,6 +19,9 @@ def get_ga_real_time_data(request):
     top_products_delivered = appDAL.get_top_products_delivered(from_datetime,
                                                                end_datetime,
                                                                limit=10)
+    top_customers_by_city = appDAL.get_top_customers_by_city(from_datetime,
+                                                             end_datetime,
+                                                             limit=10)
 
     data_context = {
         "website": {
@@ -27,6 +30,7 @@ def get_ga_real_time_data(request):
         },
         "top_retail_customers": top_retail_customers,
         "top_products_delivered": top_products_delivered,
+        "top_customers_by_city": top_customers_by_city,
     }
 
     return render(request, "app/realtime-data.html", context=data_context)
