@@ -44,7 +44,7 @@ def get_ga_real_time_data(request):
 
     orders_sold_per_minute = appDAL.get_orders_per_minutes(
         str(datetime.now().strftime("%Y-%m-%d")) + " 00:00:00",
-        str(datetime.now().strftime("%Y-%m-%d %H:%M:%s")),
+        str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
         float(datetime.now().hour * datetime.now().minute))
 
     data_context = {
@@ -70,10 +70,10 @@ def get_ga_time_based_data(request):
         datetime_range = request.GET.get("range", None).split(" - ")
         from_datetime = str(datetime.strptime(datetime_range[0].strip(),
                                               "%Y-%m-%d %H:%M %p").strftime(
-            "%Y-%m-%d %H:%M:%s"))
+            "%Y-%m-%d %H:%M:%S"))
         end_datetime = str(datetime.strptime(datetime_range[1].strip(),
                                              "%Y-%m-%d %H:%M %p").strftime(
-            "%Y-%m-%d %H:%M:%s"))
+            "%Y-%m-%d %H:%M:%S"))
 
         top_website_page_views = googleAnalytics.get_pageviews(GA_WEBSITE_VIEW_ID,
                                                        datetime.now().strftime(
@@ -99,7 +99,7 @@ def get_ga_time_based_data(request):
 
         orders_sold_per_minute = appDAL.get_orders_per_minutes(
             str(datetime.now().strftime("%Y-%m-%d")) + " 00:00:00",
-            str(datetime.now().strftime("%Y-%m-%d %H:%M:%s")),
+            str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
             float(datetime.now().hour * datetime.now().minute))
 
         data_context = {"data": {
