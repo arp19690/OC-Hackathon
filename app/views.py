@@ -11,14 +11,22 @@ def get_ga_real_time_data(request):
     total_users = website_data["totalsForAllResults"]["rt:activeUsers"]
     all_sources = website_data["rows"]
 
-    top_retail_customers = appDAL.get_top_retail_customers(limit=10)
+    from_datetime = "2017-01-01 00:00:00"
+    end_datetime = "2017-01-02 00:00:00"
+    top_retail_customers = appDAL.get_top_retail_customers(from_datetime,
+                                                           end_datetime,
+                                                           limit=10)
+    top_products_delivered = appDAL.get_top_products_delivered(from_datetime,
+                                                               end_datetime,
+                                                               limit=10)
 
     data_context = {
         "website": {
             "total_users": total_users,
             "all_sources": all_sources,
         },
-        "top_retail_customers":top_retail_customers
+        "top_retail_customers": top_retail_customers,
+        "top_products_delivered": top_products_delivered,
     }
 
     return render(request, "app/realtime-data.html", context=data_context)

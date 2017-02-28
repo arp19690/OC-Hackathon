@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="ie lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>    <html class="ie lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>    <html class="ie lt-ie9"> <![endif]-->
-<!--[if gt IE 8]> <html> <![endif]-->
+<!--[if lt IE 7]>
+<html class="ie lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="ie lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="ie lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>
+<html> <![endif]-->
 <!--[if !IE]><!-->
 <html><!-- <![endif]-->
 {% load static %}
@@ -12,9 +16,13 @@
 </head>
 <body>
 <h1>For website</h1>
+
 <p><strong>Total Users:- </strong>{{website.total_users}}</p>
 
 <p><strong>All Sources:- </strong>{{website.all_sources}}</p>
+
 <p><strong>Top retail customers:- </strong>{{top_retail_customers}}</p>
+
+<p><strong>Top products delivered:- </strong>{{top_products_delivered}}</p>
 </body>
 </html>
