@@ -85,7 +85,7 @@ def get_ga_time_based_data(request):
             from_datetime,
             end_datetime,
             limit=10)
-        top_products_delivered = appDAL.get_top_products_delivered(
+        top_products_sold = appDAL.get_top_products_sold(
             from_datetime,
             end_datetime,
             limit=10)
@@ -104,7 +104,7 @@ def get_ga_time_based_data(request):
 
         data_context = {"data": {
             "top_retail_customers": top_retail_customers,
-            "top_products_delivered": top_products_delivered,
+            "top_products_sold": top_products_sold,
             "top_customers_by_city": top_customers_by_city,
             "top_sellers": top_sellers,
             "orders_sold_per_minute": orders_sold_per_minute,
