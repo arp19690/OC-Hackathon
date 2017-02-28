@@ -6,6 +6,7 @@ from helpers import googleAnalytics
 from app.dal import app as appDAL
 
 GA_WEBSITE_VIEW_ID = "ga:73399225"
+GA_APP_VIEW_ID = "ga:132813188"
 
 # Create your views here.
 def get_ga_real_time_data(request):
