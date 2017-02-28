@@ -1,7 +1,9 @@
+from datetime import datetime
+
 from django.shortcuts import render
+
 from helpers import googleAnalytics
 from app.dal import app as appDAL
-from datetime import datetime
 
 GA_WEBSITE_VIEW_ID = "ga:73399225"
 
@@ -9,8 +11,14 @@ GA_WEBSITE_VIEW_ID = "ga:73399225"
 def get_ga_real_time_data(request):
     website_data = googleAnalytics.get_realtime_active_users(
         GA_WEBSITE_VIEW_ID)
-    total_users = website_data["totalsForAllResults"]["rt:activeUsers"]
-    all_sources = website_data["rows"]
+    total_website_users = website_data["totalsForAllResults"]["rt:activeUsers"]
+    all_website_sources = website_data["rows"]
+
+    top_page_views = googleAnalytics.get_pageviews(GA_WEBSITE_VIEW_ID,
+                                                   datetime.now().strftime(
+                                                       "%Y-%m-%d"),
+                                                   datetime.now().strftime(
+                                                       "%Y-%m-%d"))
 
     from_datetime = "2017-01-01 00:00:00"
     end_datetime = "2017-01-02 00:00:00"
@@ -34,8 +42,9 @@ def get_ga_real_time_data(request):
 
     data_context = {
         "website": {
-            "total_users": total_users,
-            "all_sources": all_sources,
+            "total_users": total_website_users,
+            "all_sources": all_website_sources,
+            "top_page_views": top_page_views,
         },
         "top_retail_customers": top_retail_customers,
         "top_products_delivered": top_products_delivered,
