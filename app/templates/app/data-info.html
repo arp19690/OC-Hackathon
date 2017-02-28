@@ -55,7 +55,7 @@
                         <div class="info green-1">
                             <div class="tile-heading">
                                 <span>Orders Per Minutes</span></div>
-                            <div class="tile-body">{{ data.orders_sold_per_minute }}</div>
+                            <div class="tile-body">{{ data.orders_sold_per_minute|floatformat:4 }}</div>
                         </div>
                         <div class="stats hide">
                             <div class="tile-content">
@@ -82,7 +82,7 @@
                                 {% for tmpdata in data.top_sellers %}
                                     <tr>
                                         <td>{{ tmpdata.seller_name }}</td>
-                                        <td>{{ tmpdata.total_amount }}</td>
+                                        <td>{{ tmpdata.total_amount|floatformat:2 }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -110,7 +110,7 @@
                                     <tr>
                                         <td>{{ tmpdata.sku }}</td>
                                         <td>{{ tmpdata.name }}</td>
-                                        <td>{{ tmpdata.total_qty }}</td>
+                                        <td>{{ tmpdata.total_qty|floatformat:0 }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -140,9 +140,9 @@
                                     <tr>
                                         <td>{{ tmpdata.customer_firstname }}&nbsp;{{ tmpdata.customer_lastname }}</td>
                                         <td>{{ tmpdata.customer_email }}</td>
-                                        <td>{{ tmpdata.total_qty }}</td>
-                                        <td>{{ tmpdata.total_order_amount }}</td>
-                                        <td>{{ tmpdata.total_shipping_cost }}</td>
+                                        <td>{{ tmpdata.total_qty|floatformat:0 }}</td>
+                                        <td>{{ tmpdata.total_order_amount|floatformat:2 }}</td>
+                                        <td>{{ tmpdata.total_shipping_cost|floatformat:2 }}</td>
                                         <td>{{ tmpdata.city }}</td>
                                         <td>{{ tmpdata.region }}</td>
                                     </tr>
