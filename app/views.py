@@ -10,12 +10,22 @@ GA_APP_VIEW_ID = "ga:132813188"
 
 # Create your views here.
 def get_ga_real_time_data(request):
-    website_data = googleAnalytics.get_realtime_active_users(
-        GA_WEBSITE_VIEW_ID)
+    website_data = googleAnalytics.get_realtime_active_users(GA_WEBSITE_VIEW_ID)
+    ga_app_data = googleAnalytics.get_realtime_active_users(GA_APP_VIEW_ID)
+
     total_website_users = website_data["totalsForAllResults"]["rt:activeUsers"]
     all_website_sources = website_data["rows"]
 
-    top_page_views = googleAnalytics.get_pageviews(GA_WEBSITE_VIEW_ID,
+    total_app_users = ga_app_data["totalsForAllResults"]["rt:activeUsers"]
+    all_app_sources = ga_app_data["rows"]
+
+    top_website_page_views = googleAnalytics.get_pageviews(GA_WEBSITE_VIEW_ID,
+                                                   datetime.now().strftime(
+                                                       "%Y-%m-%d"),
+                                                   datetime.now().strftime(
+                                                       "%Y-%m-%d"))
+
+    top_app_page_views = googleAnalytics.get_pageviews(GA_APP_VIEW_ID,
                                                    datetime.now().strftime(
                                                        "%Y-%m-%d"),
                                                    datetime.now().strftime(
@@ -30,7 +40,12 @@ def get_ga_real_time_data(request):
         "website": {
             "total_users": total_website_users,
             "all_sources": all_website_sources,
-            "top_page_views": top_page_views,
+            "top_page_views": top_website_page_views,
+        },
+        "app": {
+            "total_users": total_app_users,
+            "all_sources": all_app_sources,
+            "top_page_views": top_app_page_views,
         },
         "orders_sold_per_minute": orders_sold_per_minute,
     }
