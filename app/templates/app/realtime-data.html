@@ -17,7 +17,7 @@
     <div data-widget-group="group1">
         <div class="row upper-analytics">
 
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="info-tile info-tile-alt">
                     <div class="info green-1">
                         <div class="tile-heading"><span>Website Visitors</span></div>
@@ -25,11 +25,24 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <div class="info-tile info-tile-alt">
                     <div class="info green-2">
                         <div class="tile-heading"><span>App Visitors</span></div>
                         <div class="tile-body">{{ app.total_users }}</div>
+                    </div>
+                    <div class="stats hide">
+                        <div class="tile-content">
+                            <div id="dashboard-sparkline-gray"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div class="info-tile info-tile-alt">
+                    <div class="info green-3">
+                        <div class="tile-heading"><span>Orders Per Minutes</span></div>
+                        <div class="tile-body">{{ orders_sold_per_minute }}</div>
                     </div>
                     <div class="stats hide">
                         <div class="tile-content">
