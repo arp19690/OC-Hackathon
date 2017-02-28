@@ -26,10 +26,12 @@ def insights(start, end):
         start = start.strftime('%Y-%m-%d')
         params = {'time_range': {'since': start, 'until': end}, }
         temp = my_account.get_insights(params=params)
-        response = {'impressions': temp['impressions'],
-                    'spend': temp['spend']}
+        response = {'impressions': temp[0]['impressions'],
+                    'spend': temp[0]['spend']}
     except:
-        return response
+        pass
+
+    return response
 
 
 def campaigns_with_insights(start, end):
