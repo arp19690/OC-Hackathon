@@ -75,7 +75,7 @@ def get_ga_time_based_data(request):
                                              "%Y-%m-%d %H:%M %p").strftime(
             "%Y-%m-%d %H:%M:%s"))
 
-        top_page_views = googleAnalytics.get_pageviews(GA_WEBSITE_VIEW_ID,
+        top_website_page_views = googleAnalytics.get_pageviews(GA_WEBSITE_VIEW_ID,
                                                        datetime.now().strftime(
                                                            "%Y-%m-%d"),
                                                        datetime.now().strftime(
@@ -108,7 +108,7 @@ def get_ga_time_based_data(request):
             "top_customers_by_city": top_customers_by_city,
             "top_sellers": top_sellers,
             "orders_sold_per_minute": orders_sold_per_minute,
-            "top_page_views": top_page_views}
+            "top_website_page_views": top_website_page_views}
         }
 
     return render(request, "app/data-info.html", context=data_context)
