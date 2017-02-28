@@ -1,6 +1,7 @@
 import os
 
 from facebookads import objects
+from facebookads.adobjects.adsinsights import AdsInsights
 from facebookads.api import FacebookAdsApi
 from facebookads.objects import (
     Campaign,
@@ -22,12 +23,19 @@ def insights(start, end):
         me = objects.AdUser(fbid='me')
         my_accounts = list(me.get_ad_accounts())
         my_account = my_accounts[0]
-        end = end.strftime('%Y-%m-%d')
-        start = start.strftime('%Y-%m-%d')
+        fields = [AdsInsights.Field.clicks, AdsInsights.Field.spend,
+                  AdsInsights.Field.impressions,
+                  AdsInsights.Field.unique_clicks,
+                  AdsInsights.Field.cost_per_unique_click,
+                  AdsInsights.Field.cost_per_inline_link_click]
+
         params = {'time_range': {'since': start, 'until': end}, }
-        temp = my_account.get_insights(params=params)
+        temp = my_account.get_insights(params=params, fields=fields)
         response = {'impressions': temp[0]['impressions'],
-                    'spend': temp[0]['spend']}
+                    'spend': temp[0]['spend'], 'clicks': temp[0]['clicks'],
+                    'unique_clicks': temp[0]['unique_clicks'],
+                    'cost_per_unique_click': temp[0][
+                        'cost_per_unique_click'], }
     except:
         pass
 
@@ -44,8 +52,12 @@ def campaigns_with_insights(start, end):
         me = objects.AdUser(fbid='me')
         my_accounts = list(me.get_ad_accounts())
         my_account = my_accounts[0]
-        end = end.strftime('%Y-%m-%d')
-        start = start.strftime('%Y-%m-%d')
+        fields = [AdsInsights.Field.clicks, AdsInsights.Field.spend,
+                  AdsInsights.Field.impressions,
+                  AdsInsights.Field.unique_clicks,
+                  AdsInsights.Field.cost_per_unique_click,
+                  AdsInsights.Field.cost_per_inline_link_click]
+
         params = {'time_range': {'since': start, 'until': end}, }
         for i in my_account.get_campaigns(params=params,
                                           fields=[Campaign.Field.name,
@@ -54,8 +66,8 @@ def campaigns_with_insights(start, end):
                 campaign_dict = {'id': i['id'], 'name': i['name']
                                  }
                 campaign = Campaign(i['id'])
-                campaign_dict['campaign_data'] = campaign.get_insights(
-                    params=params)
+                campaign_dict['campaign_data'] = list(campaign.get_insights(
+                    params=params, fields=fields))
                 response.append(campaign_dict)
     except:
         pass
