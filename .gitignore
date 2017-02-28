@@ -2,3 +2,7 @@ venv
 .idea
 *.pyc
 .env
+
+helpers/client_secrets.json
+
+analytics.dat
