@@ -36,11 +36,11 @@ def get_ga_real_time_data(request):
                                                            datetime.now().strftime(
                                                                "%Y-%m-%d"))
 
-    top_app_page_views = googleAnalytics.get_pageviews(GA_APP_VIEW_ID,
-                                                       datetime.now().strftime(
-                                                           "%Y-%m-%d"),
-                                                       datetime.now().strftime(
-                                                           "%Y-%m-%d"))
+    # top_app_page_views = googleAnalytics.get_pageviews(GA_APP_VIEW_ID,
+    #                                                    datetime.now().strftime(
+    #                                                        "%Y-%m-%d"),
+    #                                                    datetime.now().strftime(
+    #                                                        "%Y-%m-%d"))
 
     orders_sold_per_minute = appDAL.get_orders_per_minutes(
         str(datetime.now().strftime("%Y-%m-%d")) + " 00:00:00",
@@ -56,7 +56,7 @@ def get_ga_real_time_data(request):
         "app": {
             "total_users": total_app_users,
             "all_sources": all_app_sources,
-            "top_page_views": top_app_page_views,
+            # "top_page_views": top_app_page_views,
         },
         "orders_sold_per_minute": orders_sold_per_minute,
     }

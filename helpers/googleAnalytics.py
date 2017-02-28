@@ -63,7 +63,7 @@ def get_realtime_active_users(view_id):
     return results
 
 
-def get_pageviews(view_id, start_date, end_date):
+def get_pageviews(view_id, start_date, end_date, max_results=20):
     # Authenticate and construct service.
     service, flags = sample_tools.init(
         [view_id], 'analytics', 'v3', __doc__, __file__, parents=[argparser],
@@ -75,6 +75,7 @@ def get_pageviews(view_id, start_date, end_date):
         start_date=start_date,
         end_date=end_date,
         sort='-ga:pageviews',
+        max_results=max_results
     ).execute()
     return results
 
