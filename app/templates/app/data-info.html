@@ -28,11 +28,12 @@
                                     <div class="input-group">
                                         <input type="text" name="range"
                                                style="max-width: none;"
+                                               value="{{ request.GET.range }}"
                                                class="form-control datetimepicker">
                                         {#                                        <label>Date-Time Picker</label>#}
 
                                         <div class="input-group-btn">
-                                            <button type="button"
+                                            <button type="submit"
                                                     class="btn btn-primary btn-raised">
                                                 Go!
                                             </button>
