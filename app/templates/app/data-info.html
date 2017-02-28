@@ -1,28 +1,60 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>
-<html class="ie lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>
-<html class="ie lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>
-<html class="ie lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>
-<html> <![endif]-->
-<!--[if !IE]><!-->
-<html><!-- <![endif]-->
+{% extends "paperadmin/master/base.html" %}
 {% load static %}
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-<h1>For website</h1>
 
-<p><strong>Order Sold Per Minute:- </strong>{{orders_sold_per_minute}}</p>
+{% block breadcrumb %}
+    <li class=""><a href="/">Home</a></li>
+    <li class="active">Dashboard</li>
+{% endblock %}
 
-<p><strong>Top retail customers:- </strong>{{top_retail_customers}}</p>
+{% block heading %}
+    <h1>Time Based Stats
+        <small>Statistics</small>
+    </h1>
+{% endblock %}
+{% block extrastyle %}{% endblock %}
 
-<p><strong>Top products delivered:- </strong>{{top_products_delivered}}</p>
+{% block content %}
+    <div data-widget-group="group1">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2>Select Date-Time</h2>
+                    </div>
+                    <div class="panel-body">
+                        <form action="" method="get">
+                            <div class="form-group">
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <input type="text" name="range"
+                                               style="max-width: none;"
+                                               class="form-control datetimepicker">
+                                        {#                                        <label>Date-Time Picker</label>#}
 
-<p><strong>Top sellers:- </strong>{{top_sellers}}</p>
-</body>
-</html>
+                                        <div class="input-group-btn">
+                                            <button type="button"
+                                                    class="btn btn-primary btn-raised">
+                                                Go!
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="material-input"></span></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrascript %}
+    <script>
+        add_custom_datatables("custom-datatable", 2, "ASC");
+        $('.datetimepicker').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 30,
+            format: 'YYYY-MM-DD h:mm A',
+        });
+    </script>
+{% endblock %}
