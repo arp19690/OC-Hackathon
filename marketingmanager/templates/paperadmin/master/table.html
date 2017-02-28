@@ -1,0 +1,197 @@
+{% extends "paperadmin/master/table_base.html" %}
+{% load static %}
+
+{% block tablehead %}
+    {% for p in po %}
+        <h4 class="heading">{{ p.po_number }}</h4>
+    {% endfor %}
+{% endblock %}
+
+{% block alerts %}
+    <div class="col-md-12 alert alert-danger" style="display:none">
+        <strong>Something Went Wrong</strong>
+    </div>
+    <div class="col-md-12 alert alert-success" style="display:none">
+        <strong>Succesfullly Updated</strong>
+    </div>
+{% endblock %}
+
+{% block tablebody %}
+    <thead>
+    {% for data in datas|slice:":1" %}
+        {% if data.postatus_po_status_id == 2 %}
+            <tr>
+                <th>Product Name</th>
+                <th>Model</th>
+                <th>Color</th>
+                <th>Price</th>
+                <th>Comment</th>
+            </tr>
+        {% endif %}
+        {% if data.postatus_po_status_id == 3 %}
+            <tr>
+                <th>Product Name</th>
+                <th>Model</th>
+                <th>Color</th>
+                <th>EAN</th>
+                <th>Edit</th>
+            </tr>
+        {% endif %}
+    {% endfor %}
+    </thead>
+    <tbody>
+    {% for data in datas %}
+        {% if data.postatus_po_status_id == 2 %}
+            <tr>
+                <td>
+                    {{ data.product_name }}
+                </td>
+                <td>
+                    {{ data.model }}
+                </td>
+                <td>
+                    {{ data.color }}
+                </td>
+                <td>
+                    {% for p in po %}
+                        <input type="number" data-po-lot={{ p.po_id }} data-po-id={{ data.podetails_id }}
+                               class="base_tprice" value={{ data.base_tprice }}>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for p in po %}
+                        <input type="text" data-po-lot={{ p.po_id }} data-po-id={{ data.podetails_id }} class="comment">
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endif %}
+
+        {% if data.postatus_po_status_id == 3 %}
+            <tr>
+                <td>
+                    {{ data.product_name }}
+                </td>
+                <td>
+                    {{ data.model }}
+                </td>
+                <td>
+                    {{ data.color }}
+                </td>
+                <td>
+                    {{ data.ean }}
+                </td>
+                <td>
+                    {% for p in po %}
+                        <button
+                                data-toggle="modal"
+                                data-target="#sheet-modal"
+                                data-po-lot={{ p.po_id }}
+                                        data-podetails-id={{ data.podetails_id }}
+                                class="btn btn-primary asin">
+                            ASIN
+                        </button>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endif %}
+
+    {% endfor %}
+    </tbody>
+{% endblock %}
+
+{% block emptytable %}
+    <table class="table table-hover">
+        <tbody>
+        <tr>
+            NO DATA PRESENT
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block actions %}
+    <div class="col-md-3 pull-right">
+        <div class="col-md-4">
+            <button class="save btn btn-success button-style">SAVE</button>
+        </div>
+        <div class="col-md-4">
+            <button class="done btn btn-success button-style">DONE</button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block modal %}
+
+    <div class="visible_sheet modal fade" id="sheet-modal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="ModalLabel">Enter URL</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="widget-body padding-bottom-none padding-top-none">
+                        <div id="loading" style="display: none;">
+                            <div class="svg-icon-loader">
+                                <img src="{% static "/assets/components/helpers/loaders/hourglass.svg" %}" width="60"
+                                     alt="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 alert alert-danger" style="display:none">
+                                <strong></strong>
+                            </div>
+                            <div class="col-md-12 alert alert-success" style="display:none">
+                                <strong></strong>
+                            </div>
+                        </div>
+                        <table class="search-asin table table-striped checkboxs">
+                            <tbody>
+                            <tr>
+                                <td style="padding-bottom:0;">
+                                    <input style="width:100%;height:30px;" type="text" name="asin"
+                                           class="url-input" placeholder="Enter URL">
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary btn-raised url-submit">Submit</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="product-display table table-striped checkboxs" style="display:none">
+                            <tbody>
+                            <tr>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button class="btn btn-primary btn-raised asin-submit">Submit</button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-custom" data-dismiss="modal">Close</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- <div class="modal-footer" style="display:none;">
+                    <span class="pull-left"></span>
+                    <button type="button" disabled class="approve btn btn-success">Submit</button>
+                    <button type="button" class="disapprove btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+ -->            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block pagescript %}
+    <script src="{% static "assets/components/helpers/category_price.js" %}"></script>
+
+    <script src="{% static "assets/components/helpers/cataloging.js" %}"></script>
+    <<<<<<< f23b1263e504968a122f6583cc0c5976670932bb
+{% endblock %}
+=======
+{% endblock %}
+>>>>>>> chnages

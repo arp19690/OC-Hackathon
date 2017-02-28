@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>    <html class="ie lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>    <html class="ie lt-ie9"> <![endif]-->
+<!--[if gt IE 8]> <html> <![endif]-->
+<!--[if !IE]><!-->
+<html><!-- <![endif]-->
+{% load static %}
+
+
+<head>
+
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Meta -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE"/>
+
+    <link href="{% static "assets/css/admin/module.admin.page.index.min.css" %}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/overrides.css" %}"/>
+
+    <script src="{% static "paperadmin/assets/js/jquery-1.10.2.min.js" %}"></script> 
+    <script src="{% static "assets/components/library/jquery/jquery-migrate.min.js" %}"></script>
+    <script src="{% static "assets/components/library/modernizr/modernizr.js" %}"></script>
+    <script src="{% static "assets/components/plugins/less-js/less.min.js" %}"></script>
+    <script src="{% static "assets/components/modules/admin/charts/flot/assets/lib/excanvas.js" %}"></script>
+    <script src="{% static "assets/components/plugins/browser/ie/ie.prototype.polyfill.js" %}"></script>
+    <script src="{% static "assets/components/library/jquery-ui/js/jquery-ui.min.js" %}"></script>
+    <script src="{% static "assets/components/plugins/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js" %}"></script>
+
+    {% block extrastyle %}{% endblock %}
+
+    {% block extrahead %}{% endblock %}
+
+    {% block blockbots %}
+        <meta name="robots" content="NONE,NOARCHIVE"/>{% endblock %}
+
+</head>
+
+<body class="">
+
+
+<div class="innerAll spacing-x1">
+
+    {% block content %}{% endblock %}
+
+</div>
+
+
+<!-- Global -->
+<script>
+    var basePath = '',
+            commonPath = '../assets/',
+            rootPath = '../',
+            DEV = false,
+            componentsPath = '../assets/components/';
+
+    var primaryColor = '#cb4040',
+            dangerColor = '#b55151',
+            infoColor = '#466baf',
+            successColor = '#8baf46',
+            warningColor = '#ab7a4b',
+            inverseColor = '#45484d';
+
+    var themerPrimaryColor = primaryColor;
+</script>
+
+<script src="{% static "assets/components/library/bootstrap/js/bootstrap.min.js" %}"></script>
+<script src="{% static "assets/components/plugins/nicescroll/jquery.nicescroll.min.js" %}"></script>
+<script src="{% static "assets/components/plugins/breakpoints/breakpoints.js" %}"></script>
+<script src="{% static "assets/components/core/js/animations.init.js" %}"></script>
+<script src="{% static "assets/components/modules/admin/charts/flot/assets/lib/jquery.flot.js" %}"></script>
+<script src="{% static "assets/components/modules/admin/charts/flot/assets/lib/jquery.flot.resize.js" %}"></script>
+<script src="{% static "assets/components/modules/admin/charts/flot/assets/lib/plugins/jquery.flot.tooltip.min.js" %}"></script>
+<script src="{% static "assets/components/modules/admin/charts/flot/assets/custom/js/flotcharts.common.js" %}"></script>
+<script src="{% static "assets/components/modules/admin/charts/flot/assets/custom/js/flotchart-simple.init.js" %}"></script>
+<script src="{% static "assets/components/modules/admin/charts/flot/assets/custom/js/flotchart-simple-bars.init.js" %}"></script>
+<script src="{% static "assets/components/modules/admin/widgets/widget-chat/assets/js/widget-chat.js" %}"></script>
+<script src="{% static "assets/components/plugins/slimscroll/jquery.slimscroll.js" %}"></script>
+<script src="{% static "assets/components/modules/admin/forms/elements/bootstrap-datepicker/assets/lib/js/bootstrap-datepicker.js" %}"></script>
+<script src="{% static "assets/components/modules/admin/forms/elements/bootstrap-datepicker/assets/custom/js/bootstrap-datepicker.init.js" %}"></script>
+<script src="{% static "assets/components/modules/admin/charts/easy-pie/assets/lib/js/jquery.easy-pie-chart.js" %}"></script>
+<script src="{% static "assets/components/modules/admin/charts/easy-pie/assets/custom/easy-pie.init.js" %}"></script>
+<script src="{% static "assets/components/modules/admin/widgets/widget-scrollable/assets/js/widget-scrollable.init.js" %}"></script>
+<script src="{% static "assets/components/plugins/holder/holder.js" %}"></script>
+<script src="{% static "assets/components/core/js/sidebar.main.init.js" %}"></script>
+<script src="{% static "assets/components/core/js/sidebar.collapse.init.js" %}"></script>
+<script src="{% static "assets/components/helpers/themer/assets/plugins/cookie/jquery.cookie.js" %}"></script>
+<script src="{% static "assets/components/core/js/core.init.js" %}"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+
+<script src="{% static "assets/components/helpers/export.js" %}"></script>
+
+{% block pagescript %}{% endblock %}
+
+{% block extrascript %}{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+#loading {
+    z-index: 5555;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(255,255,255,0.7);
+}
+#loading .svg-icon-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -50px 0 0 -50px;
+}
+.svg-icon-loader {
+    width: 100px;
+    height: 100px;
+    float: left;
+    line-height: 100px;
+    text-align: center;
+}
+.svg-icon-loader img {
+    vertical-align: middle;
+}
