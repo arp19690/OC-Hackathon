@@ -31,6 +31,12 @@ def insights(start, end):
 
         params = {'time_range': {'since': start, 'until': end}, }
         temp = my_account.get_insights(params=params, fields=fields)
+
+        try:
+            cost_per_click = float(temp[0]['spend']) / float(temp[0]['clicks'])
+        except:
+            cost_per_click = 0
+
         response = [{'field': 'Impressions', 'value': temp[0]['impressions']},
                     {'field': 'Cost', 'value': temp[0]['spend']},
                     {'field': 'Clicks', 'value': temp[0]['clicks']},
@@ -38,8 +44,7 @@ def insights(start, end):
                         'unique_clicks']},
                     {'field': 'Cost per unique click', 'value': temp[0][
                         'cost_per_unique_click']}, {'field': 'Cost per Click',
-                    'value': (float(temp[0]['spend']) / float(temp[0][
-                                                              'clicks']))}]
+                                                    'value': cost_per_click}]
     except:
         pass
 
