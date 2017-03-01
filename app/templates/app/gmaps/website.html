@@ -1,7 +1,7 @@
 {% load static %}
 {% block extratyle %}
     <style>
-        #app-map {
+        #web-map {
             width: 100%;
             height: 400px;
         }
@@ -14,20 +14,20 @@
             src="{% static "assets/js/custom/jquery.googlemap.js" %}"></script>
 {% endblock %}
 
-<div id="app-map"></div>
+<div id="web-map"></div>
 {% autoescape off %}
     <script type="text/javascript">
         var website_geo_points ={{ website.geo_points }};
         {#    var app_geo_points ={{ app.geo_points }};#}
         $(function () {
-            $("#app-map").googleMap({
+            $("#web-map").googleMap({
                 zoom: 12, // Initial zoom level (optional)
                 coords: [78.8718, 21.7679], // Map center (optional)
                 type: "ROADMAP" // Map type (optional)
             });
 
             $.each(website_geo_points, function (key, value) {
-                $("#app-map").addMarker({
+                $("#web-map").addMarker({
                     coords: [value["geo"][0], value["geo"][1]],
                     text: value["geo"]["city_name"]
                 });

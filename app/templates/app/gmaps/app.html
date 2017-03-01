@@ -2,7 +2,7 @@
 
 {% block extratyle %}
     <style>
-        #web-map {
+        #app-map {
             width: 100%;
             height: 400px;
         }
@@ -15,19 +15,19 @@
             src="{% static "assets/js/custom/jquery.googlemap.js" %}"></script>
 {% endblock %}
 
-<div id="web-map"></div>
+<div id="app-map"></div>
 {% autoescape off %}
     <script type="text/javascript">
         var app_geo_points ={{ app.geo_points }};
         $(function () {
-            $("#web-map").googleMap({
+            $("#app-map").googleMap({
                 zoom: 12, // Initial zoom level (optional)
                 coords: [78.8718, 21.7679], // Map center (optional)
                 type: "ROADMAP" // Map type (optional)
             });
 
             $.each(app_geo_points, function (key, value) {
-                $("#web-map").addMarker({
+                $("#app-map").addMarker({
                     coords: [value["geo"][0], value["geo"][1]],
                     text: value["geo"]["city_name"]
                 });
