@@ -302,7 +302,6 @@ def get_orders_by_campaigns(view_id, start_date, end_date, type="google"):
     ).execute()
 
     orders_dict = {}
-    orders_list = []
     campaigns_list = []
 
     for i in response['rows']:
@@ -313,4 +312,4 @@ def get_orders_by_campaigns(view_id, start_date, end_date, type="google"):
 
     for i in response['rows']:
         orders_dict[i[0]].append(i[1])
-    return orders_list
+    return orders_dict

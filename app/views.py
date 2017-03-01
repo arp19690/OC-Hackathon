@@ -144,8 +144,6 @@ def get_ga_time_based_data(request):
         website_orders_by_campaigns = googleAnalytics.get_orders_by_campaigns(
             GA_WEBSITE_VIEW_ID, from_datetime[:10], end_datetime[:10],
             type="google")
-        print(website_orders_by_campaigns)
-        exit()
 
         orders_sold_per_minute = appDAL.get_orders_per_minutes(
             str(datetime.now().strftime("%Y-%m-%d")) + " 00:00:00",
