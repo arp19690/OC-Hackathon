@@ -85,18 +85,25 @@ def get_insights(view_id, start_date, end_date, max_results=20):
     service, flags = sample_tools.init(
         [view_id], 'analytics', 'v3', __doc__, __file__, parents=[argparser],
         scope='https://www.googleapis.com/auth/analytics.readonly,https://www.googleapis.com/auth/analytics')
-    results = service.data().ga().get(
+    response = service.data().ga().get(
         ids=view_id,
         dimensions='ga:adGroup',
-        metrics='ga:impressions,ga:adClicks,ga:adCost',
+        metrics='ga:impressions,ga:adClicks,ga:adCost, ga:costPerConversion',
         start_date=start_date,
         end_date=end_date,
         max_results=max_results
     ).execute()
+    summary_details = {
+        "Cost Per Conversion": response['totalsForAllResults'][
+            'ga:costPerConversion'],
+        "Clicks": response['totalsForAllResults']['ga:adClicks'],
+        "Impression": response['totalsForAllResults']['ga:impressions'],
+        "Cost": response['totalsForAllResults']['ga:adCost'],
+    }
     results = {
-        'clicks': results['totalsForAllResults']['ga:adClicks'],
-        'cost': results['totalsForAllResults']['ga:adCost'],
-        'impressions': results['totalsForAllResults']['ga:impressions']
+        'column_headers': response['columnHeaders'],
+        'rows': response['rows'],
+        'summary': summary_details
     }
     return results
 

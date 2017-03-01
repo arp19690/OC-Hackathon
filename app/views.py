@@ -92,9 +92,6 @@ def get_ga_time_based_data(request):
                 "%Y-%m-%d"))
         google_analytics_website = get_insights(GA_WEBSITE_VIEW_ID, from_date,
                                                 end_date, )
-        google_analytics_mobile_app = get_insights(GA_APP_VIEW_ID, from_date,
-                                                end_date, )
-        import pdb; pdb.set_trace()
         facebook_ads_data = insights(from_date, end_date, )
         facebook_campaigns_data = campaigns_with_insights(from_date, end_date, )
         top_retail_customers = appDAL.get_top_retail_customers(
@@ -126,7 +123,6 @@ def get_ga_time_based_data(request):
             "orders_sold_per_minute": orders_sold_per_minute,
             "top_website_page_views": top_website_page_views,
             "google_analytics_website": google_analytics_website,
-            "google_analytics_mobile_app": google_analytics_mobile_app,
             "facebook_ads_data": facebook_ads_data,
             "facebook_campaigns_data": facebook_campaigns_data
         }
