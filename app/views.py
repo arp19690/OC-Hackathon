@@ -19,6 +19,7 @@ def get_ga_real_time_data(request):
 
     total_website_users = website_data["totalsForAllResults"]["rt:activeUsers"]
     all_website_sources = list()
+    website_geo_points = list()
     if len(website_data["rows"]) > 0:
         for tmpdata in website_data["rows"]:
             website_geo_points.append({
