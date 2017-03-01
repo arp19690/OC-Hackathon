@@ -5,11 +5,14 @@ from app.dal import app as appDAL
 from helpers import googleAnalytics
 from helpers import fbcampaigns
 from helpers.googleAnalytics import get_insights
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 GA_WEBSITE_VIEW_ID = "ga:73399225"
 GA_APP_VIEW_ID = "ga:132813188"
 
 # Create your views here.
+@login_required(login_url=settings.LOGIN_URL)
 def get_ga_real_time_data(request):
     website_data = googleAnalytics.get_realtime_active_users(
         GA_WEBSITE_VIEW_ID)
@@ -93,6 +96,7 @@ def get_ga_real_time_data(request):
     return render(request, "app/realtime-data.html", context=data_context)
 
 
+@login_required(login_url=settings.LOGIN_URL)
 def get_ga_time_based_data(request):
     data_context = dict()
     if "range" in request.GET:
