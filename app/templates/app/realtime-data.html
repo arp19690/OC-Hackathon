@@ -53,29 +53,15 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                <div class="info-tile info-tile-alt">
-                    <div class="info green-3">
-                        <div class="tile-heading">
-                            <span>Orders Per Minute</span></div>
-                        <div class="tile-body">{{ orders_sold_per_minute|floatformat:4 }}</div>
-                    </div>
-                    <div class="stats hide">
-                        <div class="tile-content">
-                            <div id="dashboard-sparkline-gray"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <h3>Website</h3>
                 {% include "app/gmaps/website.html" %}
             </div>
 
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <h3>App</h3>
                 {% include "app/gmaps/app.html" %}
             </div>
