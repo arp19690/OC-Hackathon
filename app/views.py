@@ -4,7 +4,7 @@ from django.shortcuts import render
 from app.dal import app as appDAL
 from helpers import googleAnalytics
 from helpers import fbcampaigns
-from helpers.googleAnalytics import get_insights
+from helpers.googleAnalytics import get_insights, get_orders_campaigns
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
