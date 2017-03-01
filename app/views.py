@@ -106,25 +106,19 @@ def get_ga_time_based_data(request):
             "%Y-%m-%d %H:%M:%S"))
         end_datetime = str(datetime.strptime(datetime_range[1].strip(),
                                              "%Y-%m-%d %H:%M %p").strftime(
-            "%Y-%m-%d"))
-        from_date = str(datetime.strptime(datetime_range[0].strip(),
-                                          "%Y-%m-%d %H:%M %p").strftime(
-            "%Y-%m-%d"))
-        end_date = str(datetime.strptime(datetime_range[1].strip(),
-                                         "%Y-%m-%d %H:%M %p").strftime(
-            "%Y-%m-%d"))
+            "%Y-%m-%d %H:%M:%S"))
+
         top_website_page_views = googleAnalytics.get_pageviews(
             GA_WEBSITE_VIEW_ID,
             datetime.now().strftime(
                 "%Y-%m-%d"),
             datetime.now().strftime(
                 "%Y-%m-%d"))
-        google_analytics_website = get_insights(GA_WEBSITE_VIEW_ID, from_date,
-                                                end_date, )
-        facebook_ads_data = fbcampaigns.insights(from_date, end_date, )
+        google_analytics_website = get_insights(GA_WEBSITE_VIEW_ID,
+                                                from_datetime, end_datetime)
+        facebook_ads_data = fbcampaigns.insights(from_datetime, end_datetime)
         facebook_campaigns_data = fbcampaigns.campaigns_with_insights(
-            from_date,
-            end_date, )
+            from_datetime, end_datetime)
         top_retail_customers = appDAL.get_top_retail_customers(
             from_datetime,
             end_datetime,
