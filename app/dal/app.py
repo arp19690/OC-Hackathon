@@ -135,15 +135,19 @@ def get_orders_per_minutes(from_datetime, end_datetime,
 def get_converted_orders(orders_list, from_datetime, end_datetime):
     if len(orders_list) > 0:
         orders_str = "'" + ("', '").join(orders_list) + "'"
-        sql = """select count(distinct(increment_id)) as total_orders from overcart.`sales_flat_order` WHERE increment_id IN (""" + orders_str + """) and `status` NOT IN (""" + str(
-            get_item_status_to_exclude()) + """) AND sfo.created_at between '""" + str(
+        sql = """select distinct(increment_id) as order_ids from overcart.`sales_flat_order` WHERE increment_id IN (""" + orders_str + """) and `status` NOT IN (""" + str(
+            get_item_status_to_exclude()) + """) AND created_at between '""" + str(
             from_datetime) + """' and '""" + str(end_datetime) + """';"""
-    cursor = connection.cursor()
-    cursor.execute(sql)
-    results = dictfetchall(cursor)
-    cursor.close()
-    total_orders = results[0]["total_orders"]
-    return total_orders
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        results = dictfetchall(cursor)
+        cursor.close()
+        if len(results)>0:
+            return results[0]["order_ids"]
+        else:
+            return []
+    else:
+        return []
 
 
 def get_top_sale_data(from_datetime, end_datetime, limit=10):
