@@ -18,6 +18,7 @@ def get_ga_real_time_data(request):
     ga_app_data = googleAnalytics.get_realtime_active_users(GA_APP_VIEW_ID)
 
     total_website_users = website_data["totalsForAllResults"]["rt:activeUsers"]
+    website_geo_points = list()
     all_website_sources = list()
     if len(website_data["rows"]) > 0:
         for tmpdata in website_data["rows"]:
