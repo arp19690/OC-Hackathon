@@ -93,6 +93,14 @@ def get_insights(view_id, start_date, end_date, max_results=20):
         end_date=end_date,
         max_results=max_results
     ).execute()
+
+    try:
+        cost_per_click = float(
+            response['totalsForAllResults']['ga:adCost']) / float(
+            response['totalsForAllResults']['ga:adClicks'])
+    except:
+        cost_per_click = 0
+
     summary_details = [{'field': "Impression",
                         'value': response['totalsForAllResults'][
                             'ga:impressions']},
@@ -105,12 +113,8 @@ def get_insights(view_id, start_date, end_date, max_results=20):
                        {'field': "Cost Per Conversion", 'value': response[
                            'totalsForAllResults'][
                            'ga:costPerConversion']},
-                       {'field': "Cost Per Click", 'value': float(response[
-                           'totalsForAllResults'][
-                           'ga:adCost'])/ float(response['totalsForAllResults'][
-                            'ga:adClicks'])},
+                       {'field': "Cost Per Click", 'value': cost_per_click}]
 
-                       ]
     headers = ["AdGroup", "Impressions", "Clicks", "Cost", "Cost per "
                                                            "Conversion"]
     rows_list = list()

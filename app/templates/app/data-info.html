@@ -63,7 +63,7 @@
                         <div class="info green-1">
                             <div class="tile-heading">
                                 <span>Orders Per Minute</span></div>
-                            <div class="tile-body">{{ data.orders_sold_per_minute|intcomma|floatformat:4 }}</div>
+                            <div class="tile-body">{{ data.orders_sold_per_minute|floatformat:4|intcomma }}</div>
                         </div>
                         <div class="stats hide">
                             <div class="tile-content">
@@ -143,10 +143,10 @@
                                 {% for row in data.google_analytics_website.rows %}
                                     <tr>
                                         <td>{{ row.AdGroup }}</td>
-                                        <td>{{ row.Impressions|intcomma|floatformat:0 }}</td>
-                                        <td>{{ row.Clicks|intcomma|floatformat:0 }}</td>
-                                        <td>{{ row.Cost|intcomma|floatformat:2 }}</td>
-                                        <td>{{ row.Cost_per_Conversion|intcomma|floatformat:4 }}</td>
+                                        <td>{{ row.Impressions|floatformat:0|intcomma }}</td>
+                                        <td>{{ row.Clicks|floatformat:0|intcomma }}</td>
+                                        <td>{{ row.Cost|floatformat:2|intcomma }}</td>
+                                        <td>{{ row.Cost_per_Conversion|floatformat:4|intcomma }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -172,11 +172,11 @@
                                 {% for row in data.facebook_campaigns_data.rows %}
                                     <tr>
                                         <td>{{ row.name }}</td>
-                                        <td>{{ row.Cost|intcomma|floatformat:2 }}</td>
-                                        <td>{{ row.Impressions|intcomma|floatformat:0 }}</td>
-                                        <td>{{ row.Clicks|intcomma|floatformat:0 }}</td>
-                                        <td>{{ row.Unique_Clicks|intcomma|floatformat:0 }}</td>
-                                        <td> {{ row.Cost_per_unique_click|intcomma|floatformat:4 }}</td>
+                                        <td>{{ row.Cost|floatformat:2|intcomma }}</td>
+                                        <td>{{ row.Impressions|floatformat:0|intcomma }}</td>
+                                        <td>{{ row.Clicks|floatformat:0|intcomma }}</td>
+                                        <td>{{ row.Unique_Clicks|floatformat:0|intcomma }}</td>
+                                        <td> {{ row.Cost_per_unique_click|floatformat:4|intcomma }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
