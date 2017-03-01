@@ -20,7 +20,7 @@ def get_ga_real_time_data(request):
     if len(website_data["rows"]) > 0:
         for tmpdata in website_data["rows"]:
             website_geo_points.append({
-                "geo": list(tmpdata[2], tmpdata[3]),
+                "geo": [tmpdata[2], tmpdata[3]],
                 "city_name": tmpdata[4],
                 "count": tmpdata[5]
             })
@@ -40,7 +40,7 @@ def get_ga_real_time_data(request):
     if len(ga_app_data["rows"]) > 0:
         for tmpdata in ga_app_data["rows"]:
             app_geo_points.append({
-                "geo": list(tmpdata[2], tmpdata[3]),
+                "geo": [tmpdata[2], tmpdata[3]],
                 "city_name": tmpdata[4],
                 "count": tmpdata[5]
             })
@@ -76,11 +76,13 @@ def get_ga_real_time_data(request):
             "total_users": total_website_users,
             "all_sources": all_website_sources,
             "top_page_views": top_website_page_views,
+            "geo_points": website_geo_points,
         },
         "app": {
             "total_users": total_app_users,
             "all_sources": all_app_sources,
             # "top_page_views": top_app_page_views,
+            "geo_points": app_geo_points,
         },
         "orders_sold_per_minute": orders_sold_per_minute,
     }
