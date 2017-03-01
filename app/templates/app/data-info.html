@@ -90,7 +90,8 @@
                                 {% for item in data.facebook_ads_data %}
                                     <tr>
                                         <td>{{ item.field }}</td>
-                                        <td>{{ item.value|intcomma|floatformat:2 }}</td>
+                                        <td>
+                                            {{ item.value|floatformat:2|intcomma }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -114,7 +115,7 @@
                                 {% for item in data.google_analytics_website.summary %}
                                     <tr>
                                         <td>{{ item.field }}</td>
-                                        <td>{{ item.value|intcomma|floatformat:2 }}</td>
+                                        <td>{{ item.value|floatformat:2|intcomma }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
