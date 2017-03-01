@@ -187,7 +187,7 @@ $(function () {
 
                 if (params.title != "" && params.text != "" && !params.url) {
                     var infowindow = new google.maps.InfoWindow({
-                        content: "<h1>" + params.title + "</h1>" + params.text
+                        content: String(params.title) + String(params.text)
                     });
 
                     var map = $this.data('googleMap');

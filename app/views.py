@@ -25,7 +25,7 @@ def get_ga_real_time_data(request):
         for tmpdata in website_data["rows"]:
             if tmpdata[2] != '0.000000' and tmpdata[3] != '0.000000':
                 website_geo_points.append({
-                    "geo": [tmpdata[2], tmpdata[3]],
+                    "geo_coords": [tmpdata[2], tmpdata[3]],
                     "city_name": tmpdata[4],
                     "count": tmpdata[5]
                 })
@@ -46,7 +46,7 @@ def get_ga_real_time_data(request):
         for tmpdata in ga_app_data["rows"]:
             if tmpdata[2] != '0.000000' and tmpdata[3] != '0.000000':
                 app_geo_points.append({
-                    "geo": [tmpdata[2], tmpdata[3]],
+                    "geo_coords": [tmpdata[2], tmpdata[3]],
                     "city_name": tmpdata[4],
                     "count": tmpdata[5]
                 })

@@ -22,9 +22,9 @@
 
             $.each(website_geo_points, function (key, value) {
                 $("#web-map").addMarker({
-                    coords: [value["geo"][0], value["geo"][1]],
-                    title: value["geo"]["city_name"],
-                    text: "<p><strong>Users: </strong>" + value["geo"]["count"] + "</p>"
+                    coords: [value["geo_coords"][0], value["geo_coords"][1]],
+                    title: "<h3>" + String(value["city_name"]) + "</h3>",
+                    text: "<p><strong>Users: </strong>" + String(value["count"]) + "</p>"
                 });
             });
         })
