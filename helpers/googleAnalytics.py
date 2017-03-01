@@ -283,9 +283,9 @@ def print_rows(results):
 # if __name__ == '__main__':
 #     main(sys.argv)
 
-def get_orders_campaigns(view_id, start_date, end_date, type):
+def get_orders_by_campaigns(view_id, start_date, end_date, type="google"):
     # Authenticate and construct service.
-    if type == 1:
+    if type == "google":
         filters = 'ga:source==google,ga:medium==cpc'
     else:
         filters = 'ga:source==facebook'
@@ -300,11 +300,17 @@ def get_orders_campaigns(view_id, start_date, end_date, type):
         end_date=end_date,
         filters=filters
     ).execute()
+
+    orders_dict = {}
     orders_list = []
+    campaigns_list = []
+
     for i in response['rows']:
-        orders_dict = {
-            'campaign_name': i[0],
-            'transaction_id': i[1]
-        }
-        orders_list.append(orders_dict)
+        campaigns_list.append(i[0])
+    campaigns_list = list(set(campaigns_list))
+    for m in campaigns_list:
+        orders_dict[m] = []
+
+    for i in response['rows']:
+        orders_dict[i[0]].append(i[1])
     return orders_list

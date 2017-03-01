@@ -4,7 +4,6 @@ from django.shortcuts import render
 from app.dal import app as appDAL
 from helpers import googleAnalytics
 from helpers import fbcampaigns
-from helpers.googleAnalytics import get_insights, get_orders_campaigns
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
@@ -115,9 +114,10 @@ def get_ga_time_based_data(request):
                 "%Y-%m-%d"),
             datetime.now().strftime(
                 "%Y-%m-%d"))
-        google_analytics_website = get_insights(GA_WEBSITE_VIEW_ID,
-                                                from_datetime[:10],
-                                                end_datetime[:10])
+        google_analytics_website = googleAnalytics.get_insights(
+            GA_WEBSITE_VIEW_ID,
+            from_datetime[:10],
+            end_datetime[:10])
         facebook_ads_data = fbcampaigns.insights(from_datetime[:10],
                                                  end_datetime[:10])
         facebook_campaigns_data = fbcampaigns.campaigns_with_insights(
@@ -140,6 +140,12 @@ def get_ga_time_based_data(request):
         top_sale_info = appDAL.get_top_sale_data(from_datetime,
                                                  end_datetime,
                                                  limit=10)
+
+        website_orders_by_campaigns = googleAnalytics.get_orders_by_campaigns(
+            GA_WEBSITE_VIEW_ID, from_datetime[:10], end_datetime[:10],
+            type="google")
+        print(website_orders_by_campaigns)
+        exit()
 
         orders_sold_per_minute = appDAL.get_orders_per_minutes(
             str(datetime.now().strftime("%Y-%m-%d")) + " 00:00:00",
