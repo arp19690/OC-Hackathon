@@ -15,19 +15,43 @@ def get_ga_real_time_data(request):
     ga_app_data = googleAnalytics.get_realtime_active_users(GA_APP_VIEW_ID)
 
     total_website_users = website_data["totalsForAllResults"]["rt:activeUsers"]
+    website_geo_points = list()
     all_website_sources = list()
     if len(website_data["rows"]) > 0:
         for tmpdata in website_data["rows"]:
+            website_geo_points.append({
+                "geo": list(tmpdata[2], tmpdata[3]),
+                "city_name": tmpdata[4],
+                "count": tmpdata[5]
+            })
             tmpdict = {"device": tmpdata[1],
-                       "data": {"source": tmpdata[0], "count": tmpdata[2]}}
+                       "data": {
+                           "source": tmpdata[0],
+                           "latitude": tmpdata[2],
+                           "longitude": tmpdata[3],
+                           "city_name": tmpdata[4],
+                           "count": tmpdata[5]
+                       }}
             all_website_sources.append(tmpdict)
 
     total_app_users = ga_app_data["totalsForAllResults"]["rt:activeUsers"]
+    app_geo_points = list()
     all_app_sources = list()
     if len(ga_app_data["rows"]) > 0:
         for tmpdata in ga_app_data["rows"]:
+            app_geo_points.append({
+                "geo": list(tmpdata[2], tmpdata[3]),
+                "city_name": tmpdata[4],
+                "count": tmpdata[5]
+            })
             tmpdict = {"device": tmpdata[1],
-                       "data": {"source": tmpdata[0], "count": tmpdata[2]}}
+                       "data": {
+                           "source": tmpdata[0],
+                           "latitude": tmpdata[2],
+                           "longitude": tmpdata[3],
+                           "city_name": tmpdata[4],
+                           "count": tmpdata[5]
+                       }}
             all_app_sources.append(tmpdict)
 
     top_website_page_views = googleAnalytics.get_pageviews(GA_WEBSITE_VIEW_ID,
@@ -75,11 +99,12 @@ def get_ga_time_based_data(request):
                                              "%Y-%m-%d %H:%M %p").strftime(
             "%Y-%m-%d %H:%M:%S"))
 
-        top_website_page_views = googleAnalytics.get_pageviews(GA_WEBSITE_VIEW_ID,
-                                                       datetime.now().strftime(
-                                                           "%Y-%m-%d"),
-                                                       datetime.now().strftime(
-                                                           "%Y-%m-%d"))
+        top_website_page_views = googleAnalytics.get_pageviews(
+            GA_WEBSITE_VIEW_ID,
+            datetime.now().strftime(
+                "%Y-%m-%d"),
+            datetime.now().strftime(
+                "%Y-%m-%d"))
 
         top_retail_customers = appDAL.get_top_retail_customers(
             from_datetime,

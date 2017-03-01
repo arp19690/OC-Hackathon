@@ -59,7 +59,7 @@ def get_realtime_active_users(view_id):
     results = service.data().realtime().get(
         ids=view_id,
         metrics='rt:activeUsers',
-        dimensions='rt:medium,rt:deviceCategory').execute()
+        dimensions='rt:medium,rt:deviceCategory,rt:latitude,rt:longitude,rt:city').execute()
     return results
 
 
