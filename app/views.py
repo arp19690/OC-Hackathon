@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.shortcuts import render
 
+from helpers import googleAnalytics
 from app.dal import app as appDAL
 from helpers import googleAnalytics
 from helpers.fbcampaigns import insights, campaigns_with_insights
@@ -10,28 +11,49 @@ from helpers.googleAnalytics import get_insights
 GA_WEBSITE_VIEW_ID = "ga:73399225"
 GA_APP_VIEW_ID = "ga:132813188"
 
-
 # Create your views here.
 def get_ga_real_time_data(request):
     website_data = googleAnalytics.get_realtime_active_users(
         GA_WEBSITE_VIEW_ID)
     ga_app_data = googleAnalytics.get_realtime_active_users(GA_APP_VIEW_ID)
 
-    total_website_users = website_data["totalsForAllResults"][
-        "rt:activeUsers"]
+    total_website_users = website_data["totalsForAllResults"]["rt:activeUsers"]
     all_website_sources = list()
     if len(website_data["rows"]) > 0:
         for tmpdata in website_data["rows"]:
+            website_geo_points.append({
+                "geo": [tmpdata[2], tmpdata[3]],
+                "city_name": tmpdata[4],
+                "count": tmpdata[5]
+            })
             tmpdict = {"device": tmpdata[1],
-                       "data": {"source": tmpdata[0], "count": tmpdata[2]}}
+                       "data": {
+                           "source": tmpdata[0],
+                           "latitude": tmpdata[2],
+                           "longitude": tmpdata[3],
+                           "city_name": tmpdata[4],
+                           "count": tmpdata[5]
+                       }}
             all_website_sources.append(tmpdict)
 
     total_app_users = ga_app_data["totalsForAllResults"]["rt:activeUsers"]
+    app_geo_points = list()
     all_app_sources = list()
     if len(ga_app_data["rows"]) > 0:
         for tmpdata in ga_app_data["rows"]:
+            app_geo_points.append({
+                "geo": [tmpdata[2], tmpdata[3]],
+                "city_name": tmpdata[4],
+                "count": tmpdata[5]
+            })
             tmpdict = {"device": tmpdata[1],
-                       "data": {"source": tmpdata[0], "count": tmpdata[2]}}
+                       "data": {
+                           "source": tmpdata[0],
+                           "latitude": tmpdata[2],
+                           "longitude": tmpdata[3],
+                           "city_name": tmpdata[4],
+                           "count": tmpdata[5]
+                       }}
             all_app_sources.append(tmpdict)
 
     top_website_page_views = googleAnalytics.get_pageviews(GA_WEBSITE_VIEW_ID,
@@ -56,11 +78,13 @@ def get_ga_real_time_data(request):
             "total_users": total_website_users,
             "all_sources": all_website_sources,
             "top_page_views": top_website_page_views,
+            "geo_points": website_geo_points,
         },
         "app": {
             "total_users": total_app_users,
             "all_sources": all_app_sources,
             # "top_page_views": top_app_page_views,
+            "geo_points": app_geo_points,
         },
         "orders_sold_per_minute": orders_sold_per_minute,
     }
