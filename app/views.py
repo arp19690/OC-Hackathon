@@ -20,7 +20,6 @@ def get_ga_real_time_data(request):
     total_website_users = website_data["totalsForAllResults"]["rt:activeUsers"]
     website_geo_points = list()
     all_website_sources = list()
-    website_geo_points = list()
     if len(website_data["rows"]) > 0:
         for tmpdata in website_data["rows"]:
             website_geo_points.append({
@@ -119,7 +118,8 @@ def get_ga_time_based_data(request):
         google_analytics_website = get_insights(GA_WEBSITE_VIEW_ID, from_date,
                                                 end_date, )
         facebook_ads_data = insights(from_date, end_date, )
-        facebook_campaigns_data = campaigns_with_insights(from_date, end_date, )
+        facebook_campaigns_data = campaigns_with_insights(from_date,
+                                                          end_date, )
         top_retail_customers = appDAL.get_top_retail_customers(
             from_datetime,
             end_datetime,
