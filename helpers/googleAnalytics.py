@@ -279,5 +279,37 @@ def print_rows(results):
     else:
         print('No Rows Found')
 
+
 # if __name__ == '__main__':
 #     main(sys.argv)
+
+def get_orders_by_campaigns(view_id, start_date, end_date, type="google"):
+    # Authenticate and construct service.
+    if type == "google":
+        filters = 'ga:source==google,ga:medium==cpc'
+    else:
+        filters = 'ga:source==facebook'
+    service, flags = sample_tools.init(
+        [view_id], 'analytics', 'v3', __doc__, __file__, parents=[argparser],
+        scope='https://www.googleapis.com/auth/analytics.readonly,https://www.googleapis.com/auth/analytics')
+    response = service.data().ga().get(
+        ids=view_id,
+        dimensions='ga:campaign,ga:transactionId,ga:medium,ga:source',
+        metrics='ga:transactions',
+        start_date=start_date,
+        end_date=end_date,
+        filters=filters
+    ).execute()
+
+    orders_dict = dict()
+    campaigns_list = list()
+
+    for i in response['rows']:
+        campaigns_list.append(i[0])
+    campaigns_list = list(set(campaigns_list))
+    for m in campaigns_list:
+        orders_dict[m] = []
+
+    for i in response['rows']:
+        orders_dict[i[0]].append(i[1])
+    return orders_dict

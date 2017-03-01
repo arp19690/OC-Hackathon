@@ -4,7 +4,6 @@ from django.shortcuts import render
 from app.dal import app as appDAL
 from helpers import googleAnalytics
 from helpers import fbcampaigns
-from helpers.googleAnalytics import get_insights
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
@@ -106,25 +105,23 @@ def get_ga_time_based_data(request):
             "%Y-%m-%d %H:%M:%S"))
         end_datetime = str(datetime.strptime(datetime_range[1].strip(),
                                              "%Y-%m-%d %H:%M %p").strftime(
-            "%Y-%m-%d"))
-        from_date = str(datetime.strptime(datetime_range[0].strip(),
-                                          "%Y-%m-%d %H:%M %p").strftime(
-            "%Y-%m-%d"))
-        end_date = str(datetime.strptime(datetime_range[1].strip(),
-                                         "%Y-%m-%d %H:%M %p").strftime(
-            "%Y-%m-%d"))
+            "%Y-%m-%d %H:%M:%S"))
+
+        # fetching info now
         top_website_page_views = googleAnalytics.get_pageviews(
             GA_WEBSITE_VIEW_ID,
             datetime.now().strftime(
                 "%Y-%m-%d"),
             datetime.now().strftime(
                 "%Y-%m-%d"))
-        google_analytics_website = get_insights(GA_WEBSITE_VIEW_ID, from_date,
-                                                end_date, )
-        facebook_ads_data = fbcampaigns.insights(from_date, end_date, )
+        google_analytics_website = googleAnalytics.get_insights(
+            GA_WEBSITE_VIEW_ID,
+            from_datetime[:10],
+            end_datetime[:10])
+        facebook_ads_data = fbcampaigns.insights(from_datetime[:10],
+                                                 end_datetime[:10])
         facebook_campaigns_data = fbcampaigns.campaigns_with_insights(
-            from_date,
-            end_date, )
+            from_datetime[:10], end_datetime[:10])
         top_retail_customers = appDAL.get_top_retail_customers(
             from_datetime,
             end_datetime,
@@ -140,6 +137,34 @@ def get_ga_time_based_data(request):
         top_sellers = appDAL.get_top_sellers(from_datetime,
                                              end_datetime,
                                              limit=10)
+        top_sale_info = appDAL.get_top_sale_data(from_datetime,
+                                                 end_datetime,
+                                                 limit=10)
+
+        website_converted_orders = list()
+        # to get converted orders from website-google
+        website_orders_by_campaigns = googleAnalytics.get_orders_by_campaigns(
+            GA_WEBSITE_VIEW_ID, from_datetime[:10], end_datetime[:10],
+            type="google")
+        for campaign_name, orders_list in website_orders_by_campaigns.items():
+            converted_orders = appDAL.get_converted_orders(orders_list,
+                                                           from_datetime,
+                                                           end_datetime)
+            website_converted_orders.append({"type": "Google",
+                                             "campaign_name": campaign_name,
+                                             "converted_orders": converted_orders})
+
+        # to get converted orders from website-facebook
+        website_orders_by_campaigns = googleAnalytics.get_orders_by_campaigns(
+            GA_WEBSITE_VIEW_ID, from_datetime[:10], end_datetime[:10],
+            type="facebook")
+        for campaign_name, orders_list in website_orders_by_campaigns.items():
+            converted_orders = appDAL.get_converted_orders(orders_list,
+                                                           from_datetime,
+                                                           end_datetime)
+            website_converted_orders.append({"type": "Facebook",
+                                             "campaign_name": campaign_name,
+                                             "converted_orders": converted_orders})
 
         orders_sold_per_minute = appDAL.get_orders_per_minutes(
             str(datetime.now().strftime("%Y-%m-%d")) + " 00:00:00",
@@ -155,7 +180,10 @@ def get_ga_time_based_data(request):
             "top_website_page_views": top_website_page_views,
             "google_analytics_website": google_analytics_website,
             "facebook_ads_data": facebook_ads_data,
-            "facebook_campaigns_data": facebook_campaigns_data
+            "facebook_campaigns_data": facebook_campaigns_data,
+            "top_sale_info": top_sale_info,
+            "website_converted_orders": website_converted_orders,
+            "app_converted_orders": website_converted_orders
         }
         }
 
