@@ -279,12 +279,13 @@ def print_rows(results):
     else:
         print('No Rows Found')
 
+
 # if __name__ == '__main__':
 #     main(sys.argv)
 
 def get_orders_campaigns(view_id, start_date, end_date, type):
     # Authenticate and construct service.
-    if type==1:
+    if type == 1:
         filters = 'ga:source==google,ga:medium==cpc'
     else:
         filters = 'ga:source==facebook'
@@ -297,14 +298,13 @@ def get_orders_campaigns(view_id, start_date, end_date, type):
         metrics='ga:transactions',
         start_date=start_date,
         end_date=end_date,
-        filters= filters
+        filters=filters
     ).execute()
     orders_list = []
     for i in response['rows']:
-        orders_dict={
+        orders_dict = {
             'campaign_name': i[0],
             'transaction_id': i[1]
         }
         orders_list.append(orders_dict)
     return orders_list
-
