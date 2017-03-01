@@ -10,19 +10,12 @@
                                  class="img-responsive img-circle">
                         </div>
                         <div class="info">
-                            <span class="username" style="color: #2c7ea2">TestName</span>
-                            <span class="useremail" style="color: #2c7ea2">TestEmail@overcart.com</span>
+                            <span class="username" style="color: #2c7ea2">{{ request.user.username }}</span>
+                            <span class="useremail" style="color: #2c7ea2">{{ request.user.email }}</span>
                         </div>
 
                         <div class="acct-dropdown clearfix dropdown">
                             <span class="pull-left"><span class="online-status online"></span>Online</span>
-                            <!-- <span class="pull-right dropdown-toggle" data-toggle="dropdown"><a href="javascript:void(0)" class="btn btn-fab-caret btn-xs btn-fab"><i class="material-icons">arrow_drop_down</i><div class="ripple-container"></div></a></span>
-                            <ul class="dropdown-menu">
-                                <li><span class="online-status online"></span> Online</li>
-                                <li><span class="online-status online"></span> Online</li>
-                                <li><span class="online-status online"></span> Online</li>
-                                <li><span class="online-status online"></span> Online</li>
-                            </ul> -->
                         </div>
                     </div>
                 </div>
@@ -33,6 +26,8 @@
                         <li class="nav-separator"><span>Navigation</span></li>
                         <li><a class="withripple" href="/app/real-time"><span class="icon"><i
                                 class="fa fa-dashboard"></i></span><span>Real Time</span></a></li>
+                        <li><a class="withripple" href="/app/data-info"><span class="icon"><i
+                                class="fa fa-dashboard"></i></span><span>Filter Data</span></a></li>
                     </ul>
                 </nav>
             </div>
