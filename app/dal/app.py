@@ -10,6 +10,16 @@ def dictfetchall(cursor):
         ]
 
 
+def get_item_status_to_exclude():
+    status_list = """'canceled',
+                    'pending',
+                    'pending_payment',
+                    'preorder',
+                    'zest_declined',
+                    'zest_timeout'"""
+    return status_list
+
+
 def get_item_status_list():
     status_list = """'confirmed',
                        'InTransit',
@@ -120,3 +130,17 @@ def get_orders_per_minutes(from_datetime, end_datetime,
     except:
         orders_per_minute = 0
     return orders_per_minute
+
+
+def get_converted_orders(orders_list, from_datetime, end_datetime):
+    if len(orders_list) > 0:
+        orders_str = "'" + ("', '").join(orders_list) + "'"
+        sql = """select count(distinct(increment_id)) as total_orders from overcart.`sales_flat_order` WHERE increment_id IN (""" + orders_str + """) and `status` NOT IN (""" + str(
+            get_item_status_to_exclude()) + """) AND sfo.created_at between '""" + str(
+            from_datetime) + """' and '""" + str(end_datetime) + """';"""
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    results = dictfetchall(cursor)
+    cursor.close()
+    total_orders = results[0]["total_orders"]
+    return total_orders
