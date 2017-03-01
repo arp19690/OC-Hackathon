@@ -37,7 +37,9 @@ def insights(start, end):
                     {'field': 'Unique Clicks', 'value': temp[0][
                         'unique_clicks']},
                     {'field': 'Cost per unique click', 'value': temp[0][
-                        'cost_per_unique_click'], }]
+                        'cost_per_unique_click']}, {'field': 'Cost per Click',
+                    'value': (float(temp[0]['spend']) / float(temp[0][
+                                                              'clicks']))}]
     except:
         pass
 
@@ -73,14 +75,16 @@ def campaigns_with_insights(start, end):
                 campaign_data = campaign.get_insights(
                     params=params, fields=fields)
                 campaign_dict = {'id': i['id'], 'name': i['name'], 'Cost':
-                    campaign_data[0]['spend'] , "Clicks": campaign_data[0][
+                    campaign_data[0]['spend'], "Clicks": campaign_data[0][
                     'clicks'], "Unique_Clicks": campaign_data[0][
                     'unique_clicks'], "Cost_per_unique_click":
-                    campaign_data[0]['cost_per_unique_click'], "Impressions":
-                    campaign_data[0]['impressions']}
+                                     campaign_data[0][
+                                         'cost_per_unique_click'],
+                                 "Impressions":
+                                     campaign_data[0]['impressions']}
                 response.append(campaign_dict)
             except:
                 pass
     except:
         pass
-    return {'headers' : headers, 'rows': response}
+    return {'headers': headers, 'rows': response}
