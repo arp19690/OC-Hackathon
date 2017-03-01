@@ -1,0 +1,97 @@
+{% extends "paperadmin/master/static-master.html" %}
+{% load static %}
+
+{% block extrastyle %}
+    <style>
+        .navbar-nav {
+            display: none;
+        }
+
+        .loginWrapper {
+            padding: 20px 0;
+        }
+
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+            font-weight: 200;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-5 col-md-offset-1">
+            <div class="clearfix" style="margin: 20px 0">
+                <h3>Welcome Back to Marketing Manager!</h3>
+            </div>
+
+            <div class="panel panel-default">
+                <form method="POST" role="form" action="" name="loginForm"
+                      class="form-horizontal">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="
+                            {% if request.GET.next %}{{ request.GET.next }}{% else %}{{ "/" }}{% endif %}"/>
+
+                    <div class="panel-body">
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="form-group mb-md">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <input type="text" class="form-control"
+                                           id="username" name="username"
+                                           value="{{ cookie_data.oc_username }}"
+                                           required="required">
+                                    <label for="username">Username</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <input type="password" class="form-control"
+                                           id="password" name="password"
+                                           value="{{ cookie_data.oc_password }}"
+                                           required="required">
+                                    <label for="password">Password</label>
+                                </div>
+                            </div>
+                            <div class="form-group mb-md">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"
+                                                   name="remember"
+                                                   {% if cookie_data.oc_remember == '1' %}checked="checked"{% endif %}
+                                                   value="1"> Remember my
+                                            details
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-md">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <a href="#"
+                                       class="btn btn-primary btn-raised btn-block login-btn">
+                                        Login
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <p class="action-links-sm">Forgot Password?</p>
+                </div>
+                <div class="col-sm-6">
+                    <a href="#" class="pull-right action-links-sm">
+                        Create an account <i class="fa fa-edit"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrascript %}
+    <script type="text/javascript"
+            src="{% static "assets/js/custom/login.js" %}"></script>
+{% endblock %}
