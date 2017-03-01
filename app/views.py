@@ -1,11 +1,9 @@
 from datetime import datetime
 
 from django.shortcuts import render
-
-from helpers import googleAnalytics
 from app.dal import app as appDAL
 from helpers import googleAnalytics
-from helpers.fbcampaigns import insights, campaigns_with_insights
+from helpers import fbcampaigns
 from helpers.googleAnalytics import get_insights
 
 GA_WEBSITE_VIEW_ID = "ga:73399225"
@@ -117,9 +115,10 @@ def get_ga_time_based_data(request):
                 "%Y-%m-%d"))
         google_analytics_website = get_insights(GA_WEBSITE_VIEW_ID, from_date,
                                                 end_date, )
-        facebook_ads_data = insights(from_date, end_date, )
-        facebook_campaigns_data = campaigns_with_insights(from_date,
-                                                          end_date, )
+        facebook_ads_data = fbcampaigns.insights(from_date, end_date, )
+        facebook_campaigns_data = fbcampaigns.campaigns_with_insights(
+            from_date,
+            end_date, )
         top_retail_customers = appDAL.get_top_retail_customers(
             from_datetime,
             end_datetime,
