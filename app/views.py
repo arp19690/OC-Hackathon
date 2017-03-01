@@ -140,6 +140,9 @@ def get_ga_time_based_data(request):
         top_sellers = appDAL.get_top_sellers(from_datetime,
                                              end_datetime,
                                              limit=10)
+        top_sale_info = appDAL.get_top_sale_data(from_datetime,
+                                                 end_datetime,
+                                                 limit=10)
 
         orders_sold_per_minute = appDAL.get_orders_per_minutes(
             str(datetime.now().strftime("%Y-%m-%d")) + " 00:00:00",
@@ -155,7 +158,8 @@ def get_ga_time_based_data(request):
             "top_website_page_views": top_website_page_views,
             "google_analytics_website": google_analytics_website,
             "facebook_ads_data": facebook_ads_data,
-            "facebook_campaigns_data": facebook_campaigns_data
+            "facebook_campaigns_data": facebook_campaigns_data,
+            "top_sale_info": top_sale_info
         }
         }
 

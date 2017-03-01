@@ -146,12 +146,13 @@ def get_converted_orders(orders_list, from_datetime, end_datetime):
     return total_orders
 
 
-def get_top_sale_data(from_datetime, end_datetime):
+def get_top_sale_data(from_datetime, end_datetime, limit=10):
     sql = """select product_id, product_name, count(distinct(email_id)) total_signups from overcart.redmi
             where product_id is not NULL and product_id != "" AND created_at between '""" + str(
         from_datetime) + """' and '""" + str(end_datetime) + """'
             group by product_id
-            order by total_signups desc;"""
+            order by total_signups desc
+            limit """ + str(limit) + """;"""
     cursor = connection.cursor()
     cursor.execute(sql)
     results = dictfetchall(cursor)
