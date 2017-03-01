@@ -33,7 +33,8 @@ def insights(start, end):
         temp = my_account.get_insights(params=params, fields=fields)
 
         try:
-            cost_per_click = float(temp[0]['spend']) / float(temp[0]['clicks'])
+            cost_per_click = float(temp[0]['spend']) / float(
+                temp[0]['clicks'])
         except:
             cost_per_click = 0
 
@@ -73,7 +74,7 @@ def campaigns_with_insights(start, end):
                                              fields=[Campaign.Field.name,
                                                      Campaign.Field.status])
         headers = ["Name", 'Cost', "Impressions", "Clicks", "Unique Clicks",
-                   "Cost per unique click", ]
+                   "Cost per unique click",]
         for i in campaigns:
             try:
                 campaign = Campaign(i['id'])
@@ -86,10 +87,11 @@ def campaigns_with_insights(start, end):
                                      campaign_data[0][
                                          'cost_per_unique_click'],
                                  "Impressions":
-                                     campaign_data[0]['impressions']}
+                                     campaign_data[0]['impressions'],
+                                 "status": i['status']}
                 response.append(campaign_dict)
             except:
                 pass
     except:
-        pass
+        headers = []
     return {'headers': headers, 'rows': response}

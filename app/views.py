@@ -153,7 +153,7 @@ def get_ga_time_based_data(request):
             website_converted_orders.append({"type": "Google",
                                              "campaign_name": campaign_name,
                                              "converted_orders": converted_orders})
-
+        # for i in website_converted_orders:
         # to get converted orders from website-facebook
         website_orders_by_campaigns = googleAnalytics.get_orders_by_campaigns(
             GA_WEBSITE_VIEW_ID, from_datetime[:10], end_datetime[:10],
