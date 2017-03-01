@@ -7,12 +7,6 @@
         }
     </style>
 {% endblock %}
-{% block extrahead %}
-    <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTsW2HWsy3u3_U4qQGM7enCqCGyIprYNY"></script>
-    <script type="text/javascript"
-            src="{% static "assets/js/custom/jquery.googlemap.js" %}"></script>
-{% endblock %}
 
 <div id="web-map"></div>
 {% autoescape off %}
@@ -28,8 +22,9 @@
 
             $.each(website_geo_points, function (key, value) {
                 $("#web-map").addMarker({
-                    coords: [value["geo"][0], value["geo"][1]],
-                    text: value["geo"]["city_name"]
+                    coords: [value["geo_coords"][0], value["geo_coords"][1]],
+                    title: "<h3>" + String(value["city_name"]) + "</h3>",
+                    text: "<p><strong>Users: </strong>" + String(value["count"]) + "</p>"
                 });
             });
         })

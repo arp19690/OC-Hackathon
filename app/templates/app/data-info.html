@@ -56,7 +56,6 @@
             </div>
         </div>
 
-
         {% if data %}
             <div class="row upper-analytics">
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -88,10 +87,11 @@
                                 <th>Value</th>
                                 </thead>
                                 <tbody>
-                                {% for key, values in data.facebook_ads_data.items %}
+                                {% for item in data.facebook_ads_data %}
                                     <tr>
-                                        <td>{{ key }}</td>
-                                        <td>{{ values }}</td>
+                                        <td>{{ item.field }}</td>
+                                        <td>
+                                            {{ item.value|floatformat:2|intcomma }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -112,10 +112,10 @@
                                 <th>Value</th>
                                 </thead>
                                 <tbody>
-                                {% for key, value in data.google_analytics_website.summary.items %}
+                                {% for item in data.google_analytics_website.summary %}
                                     <tr>
-                                        <td>{{ key }}</td>
-                                        <td>{{ value }}</td>
+                                        <td>{{ item.field }}</td>
+                                        <td>{{ item.value|floatformat:2|intcomma }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -124,6 +124,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="panel panel-default">
@@ -134,16 +135,18 @@
                             <table class="table table-striped table-bordered custom-datatable">
                                 <thead>
                                 {% for tmpdata in data.google_analytics_website.column_headers %}
-                                    <th>{{ tmpdata.name }}</th>
+                                    <th>{{ tmpdata }}</th>
                                 {% endfor %}
 
                                 </thead>
                                 <tbody>
-                                {% for tmpdata in data.google_analytics_website.rows %}
+                                {% for row in data.google_analytics_website.rows %}
                                     <tr>
-                                        {% for row in tmpdata %}
-                                            <td>{{ row }}</td>
-                                        {% endfor %}
+                                        <td>{{ row.AdGroup }}</td>
+                                        <td>{{ row.Impressions|intcomma|floatformat:0 }}</td>
+                                        <td>{{ row.Clicks|intcomma|floatformat:0 }}</td>
+                                        <td>{{ row.Cost|intcomma|floatformat:2 }}</td>
+                                        <td>{{ row.Cost_per_Conversion|intcomma|floatformat:4 }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -160,17 +163,20 @@
                         <div class="panel-body">
                             <table class="table table-striped table-bordered custom-datatable">
                                 <thead>
-                                {% for key, values in data.facebook_campaigns_data.0.campaign_data.0.items %}
-                                    <th>{{ key }}</th>
+                                {% for value in data.facebook_campaigns_data.headers %}
+                                    <th>{{ value }}</th>
                                 {% endfor %}
 
                                 </thead>
                                 <tbody>
-                                {% for tmpdata in data.facebook_campaigns_data %}
+                                {% for row in data.facebook_campaigns_data.rows %}
                                     <tr>
-                                        {% for key, values in tmpdata.campaign_data.0.items %}
-                                            <td>{{ values }}</td>
-                                        {% endfor %}
+                                        <td>{{ row.name }}</td>
+                                        <td>{{ row.Cost|intcomma|floatformat:2 }}</td>
+                                        <td>{{ row.Impressions|intcomma|floatformat:0 }}</td>
+                                        <td>{{ row.Clicks|intcomma|floatformat:0 }}</td>
+                                        <td>{{ row.Unique_Clicks|intcomma|floatformat:0 }}</td>
+                                        <td> {{ row.Cost_per_unique_click|intcomma|floatformat:4 }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -179,6 +185,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="panel panel-default">

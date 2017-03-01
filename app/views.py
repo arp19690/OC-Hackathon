@@ -1,17 +1,18 @@
 from datetime import datetime
 
 from django.shortcuts import render
-
-from helpers import googleAnalytics
 from app.dal import app as appDAL
 from helpers import googleAnalytics
-from helpers.fbcampaigns import insights, campaigns_with_insights
+from helpers import fbcampaigns
 from helpers.googleAnalytics import get_insights
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 GA_WEBSITE_VIEW_ID = "ga:73399225"
 GA_APP_VIEW_ID = "ga:132813188"
 
 # Create your views here.
+@login_required(login_url=settings.LOGIN_URL)
 def get_ga_real_time_data(request):
     website_data = googleAnalytics.get_realtime_active_users(
         GA_WEBSITE_VIEW_ID)
@@ -22,11 +23,12 @@ def get_ga_real_time_data(request):
     all_website_sources = list()
     if len(website_data["rows"]) > 0:
         for tmpdata in website_data["rows"]:
-            website_geo_points.append({
-                "geo": [tmpdata[2], tmpdata[3]],
-                "city_name": tmpdata[4],
-                "count": tmpdata[5]
-            })
+            if tmpdata[2] != '0.000000' and tmpdata[3] != '0.000000':
+                website_geo_points.append({
+                    "geo_coords": [tmpdata[2], tmpdata[3]],
+                    "city_name": tmpdata[4],
+                    "count": tmpdata[5]
+                })
             tmpdict = {"device": tmpdata[1],
                        "data": {
                            "source": tmpdata[0],
@@ -42,11 +44,12 @@ def get_ga_real_time_data(request):
     all_app_sources = list()
     if len(ga_app_data["rows"]) > 0:
         for tmpdata in ga_app_data["rows"]:
-            app_geo_points.append({
-                "geo": [tmpdata[2], tmpdata[3]],
-                "city_name": tmpdata[4],
-                "count": tmpdata[5]
-            })
+            if tmpdata[2] != '0.000000' and tmpdata[3] != '0.000000':
+                app_geo_points.append({
+                    "geo_coords": [tmpdata[2], tmpdata[3]],
+                    "city_name": tmpdata[4],
+                    "count": tmpdata[5]
+                })
             tmpdict = {"device": tmpdata[1],
                        "data": {
                            "source": tmpdata[0],
@@ -93,6 +96,7 @@ def get_ga_real_time_data(request):
     return render(request, "app/realtime-data.html", context=data_context)
 
 
+@login_required(login_url=settings.LOGIN_URL)
 def get_ga_time_based_data(request):
     data_context = dict()
     if "range" in request.GET:
@@ -117,8 +121,10 @@ def get_ga_time_based_data(request):
                 "%Y-%m-%d"))
         google_analytics_website = get_insights(GA_WEBSITE_VIEW_ID, from_date,
                                                 end_date, )
-        facebook_ads_data = insights(from_date, end_date, )
-        facebook_campaigns_data = campaigns_with_insights(from_date, end_date, )
+        facebook_ads_data = fbcampaigns.insights(from_date, end_date, )
+        facebook_campaigns_data = fbcampaigns.campaigns_with_insights(
+            from_date,
+            end_date, )
         top_retail_customers = appDAL.get_top_retail_customers(
             from_datetime,
             end_datetime,
