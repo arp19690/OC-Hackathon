@@ -87,8 +87,8 @@ def get_insights(view_id, start_date, end_date, max_results=20):
         scope='https://www.googleapis.com/auth/analytics.readonly,https://www.googleapis.com/auth/analytics')
     response = service.data().ga().get(
         ids=view_id,
-        dimensions='ga:adGroup',
-        metrics='ga:impressions,ga:adClicks,ga:adCost, ga:costPerConversion',
+        dimensions='ga:adGroup,ga:campaign',
+        metrics='ga:impressions,ga:adClicks,ga:adCost',
         start_date=start_date,
         end_date=end_date,
         max_results=max_results
@@ -110,20 +110,20 @@ def get_insights(view_id, start_date, end_date, max_results=20):
                        {'field': "Clicks",
                         'value': response['totalsForAllResults'][
                             'ga:adClicks']},
-                       {'field': "Cost Per Conversion", 'value': response[
-                           'totalsForAllResults'][
-                           'ga:costPerConversion']},
                        {'field': "Cost Per Click", 'value': cost_per_click}]
 
-    headers = ["AdGroup", "Impressions", "Clicks", "Cost", "Cost per "
-                                                           "Conversion"]
+    headers = ["Campaign", "AdGroup", "Impressions", "Clicks", "Cost",
+               "Cost Per Click"]
     rows_list = list()
     for i in response['rows']:
-        row_dict = {
-            'AdGroup': i[0],
-            "Impressions": i[1], "Clicks": i[2], "Cost": i[3],
-            "Cost_per_Conversion": i[4]
-        }
+        try:
+            cost_per_click = float(i[4])/float(i[3])
+        except:
+            cost_per_click = 0
+        row_dict = {"Campaign": i[1],
+                    'AdGroup': i[0],
+                    "Impressions": i[2], "Clicks": i[3], "Cost": i[4],
+                    "cost_per_click": cost_per_click}
         rows_list.append(row_dict)
     results = {
         'column_headers': headers,

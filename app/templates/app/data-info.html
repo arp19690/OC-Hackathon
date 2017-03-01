@@ -142,11 +142,12 @@
                                 <tbody>
                                 {% for row in data.google_analytics_website.rows %}
                                     <tr>
+                                        <td>{{ row.Campaign }}</td>
                                         <td>{{ row.AdGroup }}</td>
                                         <td>{{ row.Impressions|floatformat:0|intcomma }}</td>
                                         <td>{{ row.Clicks|floatformat:0|intcomma }}</td>
                                         <td>{{ row.Cost|floatformat:2|intcomma }}</td>
-                                        <td>{{ row.Cost_per_Conversion|floatformat:4|intcomma }}</td>
+                                        <td>{{ row.cost_per_click|floatformat:2|intcomma }}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
