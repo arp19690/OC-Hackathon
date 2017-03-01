@@ -93,16 +93,31 @@ def get_insights(view_id, start_date, end_date, max_results=20):
         end_date=end_date,
         max_results=max_results
     ).execute()
-    summary_details = {
-        "Cost Per Conversion": response['totalsForAllResults'][
-            'ga:costPerConversion'],
-        "Clicks": response['totalsForAllResults']['ga:adClicks'],
-        "Impression": response['totalsForAllResults']['ga:impressions'],
-        "Cost": response['totalsForAllResults']['ga:adCost'],
-    }
+    summary_details = [{'field': "Impression",
+                        'value': response['totalsForAllResults'][
+                            'ga:impressions']},
+                       {'field': "Cost",
+                        'value': response['totalsForAllResults'][
+                            'ga:adCost']},
+                       {'field': "Clicks",
+                        'value': response['totalsForAllResults'][
+                            'ga:adClicks']},
+                       {'field': "Cost Per Conversion", 'value': response[
+                           'totalsForAllResults'][
+                           'ga:costPerConversion']}]
+    headers = ["AdGroup", "Impressions", "Clicks", "Cost", "Cost per "
+                                                           "Conversion"]
+    rows_list = list()
+    for i in response['rows']:
+        row_dict = {
+            'AdGroup': i[0],
+            "Impressions": i[1], "Clicks": i[2], "Cost": i[3],
+            "Cost_per_Conversion": i[4]
+        }
+        rows_list.append(row_dict)
     results = {
-        'column_headers': response['columnHeaders'],
-        'rows': response['rows'],
+        'column_headers': headers,
+        'rows': rows_list,
         'summary': summary_details
     }
     return results

@@ -31,12 +31,13 @@ def insights(start, end):
 
         params = {'time_range': {'since': start, 'until': end}, }
         temp = my_account.get_insights(params=params, fields=fields)
-        response = {'Impressions': temp[0]['impressions'],
-                    'Cost': temp[0]['spend'], 'Clicks': temp[0][
-                'clicks'],
-                    'Unique Clicks': temp[0]['unique_clicks'],
-                    'Cost per unique click': temp[0][
-                        'cost_per_unique_click'], }
+        response = [{'field': 'Impressions', 'value': temp[0]['impressions']},
+                    {'field': 'Cost', 'value': temp[0]['spend']},
+                    {'field': 'Clicks', 'value': temp[0]['clicks']},
+                    {'field': 'Unique Clicks', 'value': temp[0][
+                        'unique_clicks']},
+                    {'field': 'Cost per unique click', 'value': temp[0][
+                        'cost_per_unique_click'], }]
     except:
         pass
 
@@ -62,19 +63,24 @@ def campaigns_with_insights(start, end):
         params = {'time_range': {'since': start, 'until': end},
                   'effective_status': ["ACTIVE"]}
         campaigns = my_account.get_campaigns(params=params,
-                                 fields=[Campaign.Field.name,
-                                         Campaign.Field.status])
+                                             fields=[Campaign.Field.name,
+                                                     Campaign.Field.status])
+        headers = ["Name", 'Cost', "Impressions", "Clicks", "Unique Clicks",
+                   "Cost per unique click", ]
         for i in campaigns:
             try:
-                campaign_dict = {'id': i['id']}
                 campaign = Campaign(i['id'])
                 campaign_data = campaign.get_insights(
                     params=params, fields=fields)
-                campaign_data[0]['name'] = i['name']
-                campaign_dict['campaign_data'] = campaign_data
+                campaign_dict = {'id': i['id'], 'name': i['name'], 'Cost':
+                    campaign_data[0]['spend'] , "Clicks": campaign_data[0][
+                    'clicks'], "Unique_Clicks": campaign_data[0][
+                    'unique_clicks'], "Cost_per_unique_click":
+                    campaign_data[0]['cost_per_unique_click'], "Impressions":
+                    campaign_data[0]['impressions']}
                 response.append(campaign_dict)
             except:
                 pass
     except:
         pass
-    return response
+    return {'headers' : headers, 'rows': response}
