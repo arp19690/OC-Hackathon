@@ -20,11 +20,12 @@ def get_ga_real_time_data(request):
     all_website_sources = list()
     if len(website_data["rows"]) > 0:
         for tmpdata in website_data["rows"]:
-            website_geo_points.append({
-                "geo": [tmpdata[2], tmpdata[3]],
-                "city_name": tmpdata[4],
-                "count": tmpdata[5]
-            })
+            if tmpdata[2] != '0.000000' and tmpdata[3] != '0.000000':
+                website_geo_points.append({
+                    "geo": [tmpdata[2], tmpdata[3]],
+                    "city_name": tmpdata[4],
+                    "count": tmpdata[5]
+                })
             tmpdict = {"device": tmpdata[1],
                        "data": {
                            "source": tmpdata[0],
@@ -40,11 +41,12 @@ def get_ga_real_time_data(request):
     all_app_sources = list()
     if len(ga_app_data["rows"]) > 0:
         for tmpdata in ga_app_data["rows"]:
-            app_geo_points.append({
-                "geo": [tmpdata[2], tmpdata[3]],
-                "city_name": tmpdata[4],
-                "count": tmpdata[5]
-            })
+            if tmpdata[2] != '0.000000' and tmpdata[3] != '0.000000':
+                app_geo_points.append({
+                    "geo": [tmpdata[2], tmpdata[3]],
+                    "city_name": tmpdata[4],
+                    "count": tmpdata[5]
+                })
             tmpdict = {"device": tmpdata[1],
                        "data": {
                            "source": tmpdata[0],
