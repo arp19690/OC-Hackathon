@@ -303,6 +303,32 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2>Top Sale Signup</h2>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-striped table-bordered custom-datatable">
+                                <thead>
+                                <th>Name</th>
+                                <th>Signups</th>
+                                </thead>
+                                <tbody>
+                                {% for tmpdata in data.top_sale_info %}
+                                    <tr>
+                                        <td>{{ tmpdata.product_name }}</td>
+                                        <td>{{ tmpdata.total_signups|floatformat:0|intcomma }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% endif %}
     </div>
 {% endblock %}
