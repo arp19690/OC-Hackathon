@@ -141,8 +141,8 @@ def get_ga_time_based_data(request):
                                                  end_datetime,
                                                  limit=10)
 
-        # to get converted orders from website-google
         website_converted_orders = list()
+        # to get converted orders from website-google
         website_orders_by_campaigns = googleAnalytics.get_orders_by_campaigns(
             GA_WEBSITE_VIEW_ID, from_datetime[:10], end_datetime[:10],
             type="google")
@@ -150,20 +150,21 @@ def get_ga_time_based_data(request):
             converted_orders = appDAL.get_converted_orders(orders_list,
                                                            from_datetime,
                                                            end_datetime)
-            website_converted_orders.append({"campaign_name": campaign_name,
+            website_converted_orders.append({"type": "Google",
+                                             "campaign_name": campaign_name,
                                              "converted_orders": converted_orders})
 
-        # to get converted orders from app-google
-        app_converted_orders = list()
-        app_orders_by_campaigns = googleAnalytics.get_orders_by_campaigns(
-            GA_APP_VIEW_ID, from_datetime[:10], end_datetime[:10],
-            type="google")
-        for campaign_name, orders_list in app_orders_by_campaigns.items():
+        # to get converted orders from website-facebook
+        website_orders_by_campaigns = googleAnalytics.get_orders_by_campaigns(
+            GA_WEBSITE_VIEW_ID, from_datetime[:10], end_datetime[:10],
+            type="facebook")
+        for campaign_name, orders_list in website_orders_by_campaigns.items():
             converted_orders = appDAL.get_converted_orders(orders_list,
                                                            from_datetime,
                                                            end_datetime)
-            app_converted_orders.append({"campaign_name": campaign_name,
-                                         "converted_orders": converted_orders})
+            website_converted_orders.append({"type": "Facebook",
+                                             "campaign_name": campaign_name,
+                                             "converted_orders": converted_orders})
 
         orders_sold_per_minute = appDAL.get_orders_per_minutes(
             str(datetime.now().strftime("%Y-%m-%d")) + " 00:00:00",

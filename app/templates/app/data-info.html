@@ -313,12 +313,14 @@
                         <div class="panel-body">
                             <table class="table table-striped table-bordered custom-datatable">
                                 <thead>
+                                <th>Type</th>
                                 <th>Campaign</th>
                                 <th>Total Orders</th>
                                 </thead>
                                 <tbody>
                                 {% for tmpdata in data.website_converted_orders %}
                                     <tr>
+                                        <td>{{ tmpdata.type }}</td>
                                         <td>{{ tmpdata.campaign_name }}</td>
                                         <td>{{ tmpdata.converted_orders|length|floatformat:0|intcomma }}</td>
                                     </tr>
@@ -329,32 +331,6 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h2>App Converted Orders</h2>
-                        </div>
-                        <div class="panel-body">
-                            <table class="table table-striped table-bordered custom-datatable">
-                                <thead>
-                                <th>Campaign</th>
-                                <th>Total Orders</th>
-                                </thead>
-                                <tbody>
-                                {% for tmpdata in data.app_converted_orders %}
-                                    <tr>
-                                        <td>{{ tmpdata.campaign_name }}</td>
-                                        <td>{{ tmpdata.converted_orders|length|floatformat:0|intcomma }}</td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
                 <div class="col-md-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
