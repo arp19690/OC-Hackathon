@@ -1,0 +1,37 @@
+{% load static %}
+
+{% block extratyle %}
+    <style>
+        #app-map {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+{% endblock %}
+{% block extrahead %}
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTsW2HWsy3u3_U4qQGM7enCqCGyIprYNY"></script>
+    <script type="text/javascript"
+            src="{% static "assets/js/custom/jquery.googlemap.js" %}"></script>
+{% endblock %}
+
+<div id="app-map"></div>
+{% autoescape off %}
+    <script type="text/javascript">
+        var app_geo_points ={{ app.geo_points }};
+        $(function () {
+            $("#app-map").googleMap({
+                zoom: 12, // Initial zoom level (optional)
+                coords: [78.8718, 21.7679], // Map center (optional)
+                type: "ROADMAP" // Map type (optional)
+            });
+
+            $.each(app_geo_points, function (key, value) {
+                $("#app-map").addMarker({
+                    coords: [value["geo"][0], value["geo"][1]],
+                    text: value["geo"]["city_name"]
+                });
+            });
+        })
+    </script>
+{% endautoescape %}

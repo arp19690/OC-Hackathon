@@ -105,7 +105,8 @@ def get_top_sellers(from_datetime, end_datetime, limit=10):
     return results
 
 
-def get_orders_per_minutes(from_datetime, end_datetime, current_minute_of_day):
+def get_orders_per_minutes(from_datetime, end_datetime,
+                           current_minute_of_day):
     sql = """select count(entity_id) as total_orders from overcart.`sales_flat_order` as sfo
           where sfo.`created_at` between '""" + str(
         from_datetime) + """' and '""" + str(end_datetime) + """';"""
@@ -114,6 +115,8 @@ def get_orders_per_minutes(from_datetime, end_datetime, current_minute_of_day):
     results = dictfetchall(cursor)
     cursor.close()
     total_orders = results[0]["total_orders"]
-    orders_per_minute = float(total_orders / current_minute_of_day)
-
+    try:
+        orders_per_minute = float(total_orders / current_minute_of_day)
+    except:
+        orders_per_minute = 0
     return orders_per_minute

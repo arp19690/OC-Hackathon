@@ -1,6 +1,7 @@
 import os
 
 from facebookads import objects
+from facebookads.adobjects.adsinsights import AdsInsights
 from facebookads.api import FacebookAdsApi
 from facebookads.objects import (
     Campaign,
@@ -22,12 +23,20 @@ def insights(start, end):
         me = objects.AdUser(fbid='me')
         my_accounts = list(me.get_ad_accounts())
         my_account = my_accounts[0]
-        end = end.strftime('%Y-%m-%d')
-        start = start.strftime('%Y-%m-%d')
+        fields = [AdsInsights.Field.clicks, AdsInsights.Field.spend,
+                  AdsInsights.Field.impressions,
+                  AdsInsights.Field.unique_clicks,
+                  AdsInsights.Field.cost_per_unique_click,
+                  AdsInsights.Field.cost_per_inline_link_click]
+
         params = {'time_range': {'since': start, 'until': end}, }
-        temp = my_account.get_insights(params=params)
-        response = {'impressions': temp[0]['impressions'],
-                    'spend': temp[0]['spend']}
+        temp = my_account.get_insights(params=params, fields=fields)
+        response = {'Impressions': temp[0]['impressions'],
+                    'Cost': temp[0]['spend'], 'Clicks': temp[0][
+                'clicks'],
+                    'Unique Clicks': temp[0]['unique_clicks'],
+                    'Cost per unique click': temp[0][
+                        'cost_per_unique_click'], }
     except:
         pass
 
@@ -44,19 +53,28 @@ def campaigns_with_insights(start, end):
         me = objects.AdUser(fbid='me')
         my_accounts = list(me.get_ad_accounts())
         my_account = my_accounts[0]
-        end = end.strftime('%Y-%m-%d')
-        start = start.strftime('%Y-%m-%d')
-        params = {'time_range': {'since': start, 'until': end}, }
-        for i in my_account.get_campaigns(params=params,
-                                          fields=[Campaign.Field.name,
-                                                  Campaign.Field.status]):
-            if i['status'] == "ACTIVE":
-                campaign_dict = {'id': i['id'], 'name': i['name']
-                                 }
+        fields = [AdsInsights.Field.clicks, AdsInsights.Field.spend,
+                  AdsInsights.Field.impressions,
+                  AdsInsights.Field.unique_clicks,
+                  AdsInsights.Field.cost_per_unique_click,
+                  AdsInsights.Field.cost_per_inline_link_click]
+
+        params = {'time_range': {'since': start, 'until': end},
+                  'effective_status': ["ACTIVE"]}
+        campaigns = my_account.get_campaigns(params=params,
+                                 fields=[Campaign.Field.name,
+                                         Campaign.Field.status])
+        for i in campaigns:
+            try:
+                campaign_dict = {'id': i['id']}
                 campaign = Campaign(i['id'])
-                campaign_dict['campaign_data'] = campaign.get_insights(
-                    params=params)
+                campaign_data = campaign.get_insights(
+                    params=params, fields=fields)
+                campaign_data[0]['name'] = i['name']
+                campaign_dict['campaign_data'] = campaign_data
                 response.append(campaign_dict)
+            except:
+                pass
     except:
         pass
     return response
