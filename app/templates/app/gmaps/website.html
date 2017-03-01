@@ -24,7 +24,7 @@
                 $("#web-map").addMarker({
                     coords: [value["geo"][0], value["geo"][1]],
                     title: value["geo"]["city_name"],
-                    text: "<p>" + value["geo"]["city_name"] + "</p>"
+                    text: "<p><strong>Users: </strong>" + value["geo"]["count"] + "</p>"
                 });
             });
         })
