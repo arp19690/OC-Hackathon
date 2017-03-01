@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function
-import argparse
-import sys
 
-from googleapiclient.errors import HttpError
+import argparse
+
 from googleapiclient import sample_tools
+from googleapiclient.errors import HttpError
 from oauth2client.client import AccessTokenRefreshError
 
 # Declare command-line flags.
@@ -77,6 +77,34 @@ def get_pageviews(view_id, start_date, end_date, max_results=20):
         sort='-ga:pageviews',
         max_results=max_results
     ).execute()
+    return results
+
+
+def get_insights(view_id, start_date, end_date, max_results=20):
+    # Authenticate and construct service.
+    service, flags = sample_tools.init(
+        [view_id], 'analytics', 'v3', __doc__, __file__, parents=[argparser],
+        scope='https://www.googleapis.com/auth/analytics.readonly,https://www.googleapis.com/auth/analytics')
+    response = service.data().ga().get(
+        ids=view_id,
+        dimensions='ga:adGroup',
+        metrics='ga:impressions,ga:adClicks,ga:adCost, ga:costPerConversion',
+        start_date=start_date,
+        end_date=end_date,
+        max_results=max_results
+    ).execute()
+    summary_details = {
+        "Cost Per Conversion": response['totalsForAllResults'][
+            'ga:costPerConversion'],
+        "Clicks": response['totalsForAllResults']['ga:adClicks'],
+        "Impression": response['totalsForAllResults']['ga:impressions'],
+        "Cost": response['totalsForAllResults']['ga:adCost'],
+    }
+    results = {
+        'column_headers': response['columnHeaders'],
+        'rows': response['rows'],
+        'summary': summary_details
+    }
     return results
 
 
