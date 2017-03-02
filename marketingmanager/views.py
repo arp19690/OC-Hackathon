@@ -7,8 +7,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.conf import settings
-
-from oauth2client import client
+from helpers import googleAnalytics
 
 
 @login_required(login_url=settings.LOGIN_URL)
@@ -39,10 +38,10 @@ def login(request):
 
                 # google auth here
                 if "credentials" not in request.session:
-                    google_auth(request)
-
-                redirect_url = "/app/data-info"
-                return redirect(redirect_url)
+                    return redirect(googleAnalytics.google_auth(request))
+                else:
+                    redirect_url = "/app/data-info"
+                    return redirect(redirect_url)
 
 
 @login_required(login_url=settings.LOGIN_URL)
@@ -50,24 +49,6 @@ def logout(request):
     auth_logout(request)
     request.session.flush()
     return redirect(reverse('login'))
-
-
-def google_auth(request):
-    client_secrets_file_path = settings.BASE_DIR + "/helpers/client_secrets.json"
-    flow = client.flow_from_clientsecrets(client_secrets_file_path,
-                                          scope='https://www.googleapis.com/auth/drive.metadata.readonly',
-                                          redirect_uri=request.path)
-    flow.params['access_type'] = 'offline'  # offline access
-    flow.params['include_granted_scopes'] = True  # incremental auth
-
-    if 'code' not in request.GET:
-        auth_uri = flow.step1_get_authorize_url()
-        return redirect(auth_uri)
-    else:
-        auth_code = request.GET.get('code')
-        credentials = flow.step2_exchange(auth_code)
-        request.session['credentials'] = credentials.to_json()
-        return redirect("/")
 
 
 # Error handlers mentioned below

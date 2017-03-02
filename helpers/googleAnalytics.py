@@ -8,9 +8,29 @@ import argparse
 from googleapiclient import sample_tools
 from googleapiclient.errors import HttpError
 from oauth2client.client import AccessTokenRefreshError
+from django.conf import settings
+from oauth2client import client
 
 # Declare command-line flags.
 argparser = argparse.ArgumentParser(add_help=False)
+
+
+def google_auth(request):
+    client_secrets_file_path = settings.BASE_DIR + "/helpers/client_secrets.json"
+    flow = client.flow_from_clientsecrets(client_secrets_file_path,
+                                          scope='https://www.googleapis.com/auth/drive.metadata.readonly',
+                                          redirect_uri=request.path)
+    flow.params['access_type'] = 'offline'  # offline access
+    flow.params['include_granted_scopes'] = True  # incremental auth
+
+    if 'code' not in request.GET:
+        auth_uri = flow.step1_get_authorize_url()
+        return auth_uri
+    else:
+        auth_code = request.GET.get('code')
+        credentials = flow.step2_exchange(auth_code)
+        request.session['credentials'] = credentials.to_json()
+        return "/"
 
 
 def main(argv):
@@ -117,7 +137,7 @@ def get_insights(view_id, start_date, end_date, max_results=20):
     rows_list = list()
     for i in response['rows']:
         try:
-            cost_per_click = float(i[4])/float(i[3])
+            cost_per_click = float(i[4]) / float(i[3])
         except:
             cost_per_click = 0
         row_dict = {"Campaign": i[1],
