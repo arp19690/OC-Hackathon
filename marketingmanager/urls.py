@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^$', index, name="index"),
     url(r'^login/$', login, name="login"),
     url(r'^logout/$', logout, name="logout"),
+    url(r'^google-auth/', google_auth, name="google-auth"),
     url(r'^app/', include("app.urls")),
 ]
 
