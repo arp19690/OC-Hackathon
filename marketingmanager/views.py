@@ -55,8 +55,10 @@ def logout(request):
 def google_auth(request):
     flow = client.flow_from_clientsecrets('client_secrets.json',
                                           scope='https://www.googleapis.com/auth/drive.metadata.readonly',
-                                          redirect_uri=request.path,
-                                          include_granted_scopes=True)
+                                          redirect_uri=request.path)
+    flow.params['access_type'] = 'offline'         # offline access
+    flow.params['include_granted_scopes'] = True   # incremental auth
+    
     if 'code' not in request.GET:
         auth_uri = flow.step1_get_authorize_url()
         return redirect(auth_uri)
