@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.conf import settings
+import httplib2
 from oauth2client import client
 import os
 
@@ -60,7 +61,9 @@ def google_auth(request):
     else:
         auth_code = request.GET.get('code')
         credentials = flow.step2_exchange(auth_code)
+        http_auth = credentials.authorize(httplib2.Http())
         request.session['credentials'] = credentials.to_json()
+        # request.session['http_auth'] = http_auth
         return redirect("/")
 
 
