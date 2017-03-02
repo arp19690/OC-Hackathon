@@ -52,7 +52,7 @@ def google_auth(request):
                                           redirect_uri=os.environ.get(
                                               "SITE_URL") + request.path)
     flow.params['access_type'] = 'offline'  # offline access
-    flow.params['include_granted_scopes'] = True  # incremental auth
+    # flow.params['include_granted_scopes'] = True  # incremental auth
 
     if 'code' not in request.GET:
         auth_uri = flow.step1_get_authorize_url()
