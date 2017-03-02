@@ -7,8 +7,8 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.conf import settings
-from helpers import googleAnalytics
 from oauth2client import client
+from django.core.urlresolvers import resolve
 
 
 @login_required(login_url=settings.LOGIN_URL)
@@ -48,8 +48,8 @@ def login(request):
 def google_auth(request):
     client_secrets_file_path = settings.BASE_DIR + "/helpers/client_secrets.json"
     flow = client.flow_from_clientsecrets(client_secrets_file_path,
-                                          scope='https://www.googleapis.com/auth/drive.metadata.readonly',
-                                          redirect_uri=request.path)
+                                          scope='https://www.googleapis.com/auth/analytics.readonly',
+                                          redirect_uri="http://marketing.hackathon.overcart.com" + request.path)
     flow.params['access_type'] = 'offline'  # offline access
     flow.params['include_granted_scopes'] = True  # incremental auth
 
