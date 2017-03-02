@@ -8,6 +8,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.conf import settings
 
+from oauth2client import client
+
 
 @login_required(login_url=settings.LOGIN_URL)
 def index(request):
@@ -34,6 +36,11 @@ def login(request):
                 return render(request, 'marketingmanager/login.html')
             if user.is_active:
                 auth_login(request, user)
+
+                # google auth here
+                if "credentials" not in request.session:
+                    google_auth(request)
+
                 redirect_url = "/app/data-info"
                 return redirect(redirect_url)
 
@@ -43,6 +50,21 @@ def logout(request):
     auth_logout(request)
     request.session.flush()
     return redirect(reverse('login'))
+
+
+def google_auth(request):
+    flow = client.flow_from_clientsecrets('client_secrets.json',
+                                          scope='https://www.googleapis.com/auth/drive.metadata.readonly',
+                                          redirect_uri=request.path,
+                                          include_granted_scopes=True)
+    if 'code' not in request.GET:
+        auth_uri = flow.step1_get_authorize_url()
+        return redirect(auth_uri)
+    else:
+        auth_code = request.GET.get('code')
+        credentials = flow.step2_exchange(auth_code)
+        request.session['credentials'] = credentials.to_json()
+        return redirect("/")
 
 
 # Error handlers mentioned below
