@@ -46,6 +46,7 @@ def login(request):
                     return redirect(redirect_url)
 
 
+@login_required(login_url=settings.LOGIN_URL)
 def google_auth(request):
     client_secrets_file_path = settings.BASE_DIR + "/helpers/client_secrets.json"
     flow = client.flow_from_clientsecrets(client_secrets_file_path,

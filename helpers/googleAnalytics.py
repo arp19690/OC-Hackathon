@@ -5,21 +5,13 @@ from __future__ import print_function
 
 import argparse
 
-from googleapiclient import discovery
 from googleapiclient import sample_tools
 from googleapiclient.errors import HttpError
-import httplib2
 from oauth2client.client import AccessTokenRefreshError
 
 
 # Declare command-line flags.
 argparser = argparse.ArgumentParser(add_help=False)
-
-from oauth2client import gce
-
-credentials = gce.AppAssertionCredentials(scope='https://www.googleapis.com/auth/analytics.readonly')
-http = credentials.authorize(httplib2.Http())
-service = discovery.build("analytics", "v3", http=http)
 
 
 def main(argv):
@@ -289,9 +281,6 @@ def print_rows(results):
         print('No Rows Found')
 
 
-# if __name__ == '__main__':
-#     main(sys.argv)
-
 def get_orders_by_campaigns(view_id, start_date, end_date, type="google"):
     # Authenticate and construct service.
     if type == "google":
@@ -322,3 +311,7 @@ def get_orders_by_campaigns(view_id, start_date, end_date, type="google"):
     for i in response['rows']:
         orders_dict[i[0]].append(i[1])
     return orders_dict
+
+
+# if __name__ == '__main__':
+#     main(sys.argv)
