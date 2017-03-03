@@ -40,7 +40,7 @@ def login(request):
 
                 # google auth here
                 if "credentials" not in request.session:
-                    return redirect(google_auth(request))
+                    return redirect(reverse("google-auth"))
                 else:
                     redirect_url = "/app/data-info"
                     return redirect(redirect_url)
