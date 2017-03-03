@@ -63,7 +63,7 @@ def google_auth(request):
         credentials = flow.step2_exchange(auth_code)
         http_auth = credentials.authorize(httplib2.Http())
         request.session['credentials'] = credentials.to_json()
-        # request.session['http_auth'] = http_auth
+        request.session['http_auth'] = http_auth
         return redirect("/")
 
 

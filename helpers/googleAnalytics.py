@@ -5,12 +5,21 @@ from __future__ import print_function
 
 import argparse
 
+from googleapiclient import discovery
 from googleapiclient import sample_tools
 from googleapiclient.errors import HttpError
+import httplib2
 from oauth2client.client import AccessTokenRefreshError
+
 
 # Declare command-line flags.
 argparser = argparse.ArgumentParser(add_help=False)
+
+from oauth2client import gce
+
+credentials = gce.AppAssertionCredentials(scope='https://www.googleapis.com/auth/analytics.readonly')
+http = credentials.authorize(httplib2.Http())
+service = discovery.build("analytics", "v3", http=http)
 
 
 def main(argv):
